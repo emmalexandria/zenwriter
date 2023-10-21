@@ -36,7 +36,11 @@
             })
             if(!selectedPath) return;
             state.path = selectedPath;
+            state.filename = nameFromPath(selectedPath);
             state.contents = await readTextFile(selectedPath);
+            state.saved = true;
+
+            editorComp.setContent(state.contents);
         }
         
         catch(err) {
