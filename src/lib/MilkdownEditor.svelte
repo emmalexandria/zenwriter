@@ -11,8 +11,10 @@
 
     export let wordCount = 0;
 
+    let editorRef;
+
 	function editor(dom) {
-		let editor = Editor.make()
+		editor = Editor.make()
 			.config((ctx) => {
 				ctx.set(rootCtx, dom);
                 ctx.get(listenerCtx).markdownUpdated((ctx, markdown, prevMarkdown) => {
@@ -44,6 +46,7 @@
 
         return Math.ceil(count/5)*5;
     }
+
     
 </script>
 

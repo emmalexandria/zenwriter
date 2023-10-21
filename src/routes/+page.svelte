@@ -4,15 +4,23 @@
 
     
 
-    import {readTextFile} from "@tauri-apps/api/fs"
-    import {open} from "@tauri-apps/api/dialog"
+    import {readTextFile, writeTextFile} from "@tauri-apps/api/fs"
+    import {open, save, confirm} from "@tauri-apps/api/dialog"
 
     let state = {
-        filename: "New file",
+        filename: "Untitled",
         path: "",
         contents: "",
         saved: true
     }
+
+    /* TODO: 
+        [ ] - Implement ability to erase content of editor 
+        [ ] - Implement renaming
+        [ ] - Cover case that what you want to rename file to is already existing
+        [ ] - Implement 'file rename' event on TopBar so that user intent is retained 
+    
+    */
 
     const openFile = async () => {
         try {
@@ -36,11 +44,49 @@
 
     function saveFile() {
         if(state.path === undefined || state.path === "") {
-            console.log("No file path");
+            saveAs();
+        }
+        else {
+            saveWithState();
         }
     }
 
-    function newFile() {
+    const saveWithState = async () => {
+        await writeTextFile(state.path, state.contents);
+        state.saved = true;
+    }
+
+    const saveAs = async () => {
+        try {
+            const filePath = await save({
+                filters: [{
+                    name: 'Markdown',
+                    extensions: ['md']
+                }],
+                title: "Save as",
+                defaultPath: state.filename+".md",
+            })
+            if(!filePath) return;
+            state.path = filePath;
+            state.filename = nameFromPath(filePath)
+            await saveWithState();
+        }
+        catch(err) {
+            console.error(err);
+        }
+    }
+
+    const newFile = async () => {
+        if(state.saved != true) {
+            const conf = await confirm(
+                "This will discard your changes. Continue?", 
+                {type: "warning", title:"zenwriter", cancelLabel: "Cancel", okLabel: "Confirm"}
+            );
+            if(!conf) return;
+        }
+    }
+
+    function rename() {
 
     }
 
@@ -49,19 +95,32 @@
         state.contents = ev.detail.new;
     }
 
-    $: console.log(state.contents);
+    function nameFromPath(path) {
+        let pathStandardised = path.replace(/\\/g, '/')
 
-
+        
+        let fileNameExt = pathStandardised.substr(pathStandardised.lastIndexOf('/')+1)
+        let fileName = fileNameExt.substr(0,fileNameExt.lastIndexOf("."))
+        return fileName;
+    }
 </script>
 
-<header><TopBar bind:title={state.path} fileSaved={state.saved} on:openEv={openFile}/></header>
+<header>
+	<TopBar
+		bind:title={state.filename}
+		fileSaved={state.saved}
+		on:openEv={openFile}
+		on:saveEv={saveFile}
+		on:newEv={newFile}
+	/>
+</header>
 <article>
-	<MilkdownEditor on:markdownUpdate={markdownUpdated}/>
+	<MilkdownEditor on:markdownUpdate={markdownUpdated} />
 </article>
 
 <style lang="scss">
-    article {
-        width: 60%;
+	article {
+		width: 60%;
 		margin: 0 auto;
 	}
 
@@ -69,7 +128,4 @@
 		width: 60%;
 		margin: 0 auto;
 	}
-
-
-
 </style>
