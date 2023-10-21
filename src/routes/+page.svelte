@@ -38,14 +38,17 @@
             state.path = selectedPath;
             state.filename = nameFromPath(selectedPath);
             state.contents = await readTextFile(selectedPath);
+            editorComp.setContent(state.contents);
+
             state.saved = true;
 
-            editorComp.setContent(state.contents);
         }
         
         catch(err) {
             console.error(err);
         }
+        
+        
     }
 
     function saveFile() {
