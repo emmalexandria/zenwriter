@@ -1,38 +1,30 @@
-# create-svelte
+# Zenwriter&#x20;
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+**A zen Markdown writing experience**
 
-## Creating a project
 
-If you're seeing this, you've probably already done this step. Congrats!
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+Zenwriter is a [Tauri](https://tauri.app) based Markdown editor which was thrown together in a couple of days. The editor itself relies heavily on [Milkdown](https://milkdown.dev/). As of right now, there are only builds available for 64 bit Windows, but I have the ability to build for MacOS and Linux and will do so soon.
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
 
-## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### Aims
 
-```bash
-npm run dev
+*   Fast to start, low memory usage
+*   Minimally distracting UI
+*   Simple but aesthetically pleasing rendering
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+### Roadmap
 
-## Building
+*   Get accurate wordcount functionality
+*   Move most of the backend logic to Rust to tidy up the frontend code
+*   Integration with system dark-mode
+*   Responsive text sizing according to window size
+*   System spellcheck disable
+*   Styled scrollbar
 
-To create a production version of your app:
 
-```bash
-npm run build
-```
 
-You can preview the production build with `npm run preview`.
+### Warning
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+As I stated, I threw this together in a couple days. It's gonna be rough around the edges, probably for a little bit.&#x20;
