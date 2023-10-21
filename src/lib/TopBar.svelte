@@ -4,6 +4,9 @@
 	import Icon from '@iconify/svelte';
 
 	export let title = 'Untitled';
+
+	export let editableTitle;
+
 	export let fileSaved;
 
 	
@@ -31,7 +34,7 @@
 </script>
 
 <div>
-	<p id="titleEditable" contenteditable="true" bind:innerText={title} on:keypress={titleKeypress}/>
+	<p id="titleEditable" contenteditable="true" bind:innerText={editableTitle} on:keypress={titleKeypress}>{title}</p>
 	<span>{fileSaved ? '' : '*'}</span>
 	<button on:click={newEv}>new</button>
 	<button on:click={openEv}>open</button>
@@ -68,7 +71,7 @@
 	}
 
 	p {
-		font-family: 'Open Sans';
+		font-family: "Playfair Display";
 		margin: 0;
 		padding: 0;
 		font-style: italic;

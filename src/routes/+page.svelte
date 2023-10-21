@@ -14,8 +14,10 @@
         saved: true
     }
 
+    let editorComp;
+
     /* TODO: 
-        [ ] - Implement ability to erase content of editor 
+        [x] - Implement ability to erase content of editor 
         [ ] - Implement renaming
         [ ] - Cover case that what you want to rename file to is already existing
         [ ] - Implement 'file rename' event on TopBar so that user intent is retained 
@@ -78,12 +80,16 @@
 
     const newFile = async () => {
         if(state.saved != true) {
-            const conf = await confirm(
+            let conf = await confirm(
                 "This will discard your changes. Continue?", 
                 {type: "warning", title:"zenwriter", cancelLabel: "Cancel", okLabel: "Confirm"}
             );
             if(!conf) return;
         }
+        editorComp.setContent("");
+        state.path = "";
+        state.name = "Untitled";
+        state.contents = "";
     }
 
     function rename() {
@@ -115,7 +121,7 @@
 	/>
 </header>
 <article>
-	<MilkdownEditor on:markdownUpdate={markdownUpdated} />
+	<MilkdownEditor on:markdownUpdate={markdownUpdated} bind:this={editorComp} />
 </article>
 
 <style lang="scss">
