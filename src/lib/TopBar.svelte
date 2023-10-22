@@ -1,5 +1,5 @@
 <script>
-	import {createEventDispatcher} from 'svelte';
+	import { createEventDispatcher } from 'svelte';
 
 	import Icon from '@iconify/svelte';
 
@@ -9,59 +9,116 @@
 
 	export let fileSaved;
 
-	
-    const dispatch = createEventDispatcher();
+	let titleFocused = false;
 
+	const dispatch = createEventDispatcher();
 
 	function titleKeypress(ev) {
-		if(ev.code == 'Enter') {
+		if (ev.key == 'Enter') {
 			ev.preventDefault();
+
+			title = editableTitle;
+			renameEv()
+			document.activeElement.blur()
+		}
+		if(ev.key=='Escape' || ev.key == "Esc") {
+			editableTitle = title;
+
+			document.activeElement.blur()
 		}
 	}
 
-    function openEv() {
-        dispatch('openEv');
-    }
+	function openEv() {
+		dispatch('openEv');
+	}
 
-    function newEv() {
-        dispatch('newEv');
-    }
+	function newEv() {
+		dispatch('newEv');
+	}
 
-    function saveEv() {
-        dispatch('saveEv');
-    }
+	function saveEv() {
+		dispatch('saveEv');
+	}
 
+	function renameEv() {
+		dispatch('renameEv');
+	}
+
+	function focusIn() {
+		titleFocused = true;
+	}
+
+	function focusOut() {
+		titleFocused = false;
+
+		editableTitle = title;
+	}
+
+	$: editableTitle = title;
 </script>
 
-<div>
-	<p id="titleEditable" contenteditable="true" bind:innerText={editableTitle} on:keypress={titleKeypress}>{title}</p>
-	<span>{fileSaved ? '' : '*'}</span>
-	<button on:click={newEv}>new</button>
-	<button on:click={openEv}>open</button>
-	<button on:click={saveEv}>save</button>
-	<span class="threedots">
-		<Icon icon="carbon:overflow-menu-horizontal" />
-	</span>
+<div class="outer">
+	<div class="container">
+		<p
+			class="title"
+			id="titleEditable"
+			contenteditable="true"
+			bind:innerText={editableTitle}
+			on:focusin={focusIn}
+			on:focusout={focusOut}
+			on:keydown={titleKeypress}
+		>
+			{title}
+		</p>
+
+		<span class="filesaved">{fileSaved ? '' : '*'}</span>
+
+		<end-items>
+			<button on:click={newEv}>new</button>
+			<button on:click={openEv}>open</button>
+			<button on:click={saveEv}>save</button>
+			<span class="threedots">
+				<Icon icon="carbon:overflow-menu-horizontal" />
+			</span>
+		</end-items>
+	</div>
+	<p class="renameinfo" class:visible={titleFocused} contenteditable="false">
+		Enter to rename the file, escape to cancel
+	</p>
 </div>
 
 <style lang="scss">
-	div {
+	div.container {
 		max-width: 100%;
-		padding: 1rem;
 		margin: 0;
 		display: flex;
 		flex-direction: row;
 		align-items: baseline;
+		
 
 		background-color: var(--bg);
 	}
 
-	span {
+	div.outer {
+		display: flex;
+		flex-direction: column;
+		max-width: 100%;
+		margin: 0;
+		padding: 1rem;
+	}
+
+	end-items {
+		align-self: flex-end center;
+	}
+
+	span.filesaved {
 		font-family: 'Open Sans';
 		font-size: 16px;
 		color: var(--g100);
 		opacity: 0.6;
 		margin-right: 12px;
+
+		margin-right: auto;
 	}
 
 	.threedots {
@@ -70,8 +127,8 @@
 		margin-left: auto;
 	}
 
-	p {
-		font-family: "EB Garamond";
+	p.title {
+		font-family: 'EB Garamond';
 		margin: 0;
 		padding: 0;
 		font-style: italic;
@@ -80,14 +137,36 @@
 
 		outline: none;
 
-		width: fit-content;
+		width: max-content;
+		min-width: 16px;
+		text-decoration: underline;
+		max-width: 60%;
+		align-self: flex-start center;
+	}
+
+	p.renameinfo {
+		display: none;
+		padding: 0;
+		margin: 0;
+		opacity: 0;
+		color: var(--g100);
+		font-family: 'Open Sans';
+		font-size: 12px;
+		width: 100%;
+
+		transition: opacity 0.1s ease-in-out;
+	}
+
+	p.visible {
+		display: inline-block;
+		opacity: 0.8;
 	}
 
 	button {
 		border: unset;
 		margin: 0;
 		text-decoration: solid underline transparent;
-        margin-left: 2px;
+		margin-left: 2px;
 		background-color: unset;
 		font-family: 'Open Sans';
 		font-size: 16px;
@@ -95,8 +174,7 @@
 		border-radius: 1rem 1rem 0 0;
 		padding: 0.5rem;
 
-
-        cursor: pointer; 
+		cursor: pointer;
 
 		transition: text-decoration-color 0.3s, font-weight 0.3s;
 

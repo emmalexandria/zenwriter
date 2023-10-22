@@ -7,6 +7,8 @@
     import {readTextFile, writeTextFile} from "@tauri-apps/api/fs"
     import {open, save, confirm} from "@tauri-apps/api/dialog"
 
+    import {nameFromPath, baseDirFromPath} from "$lib/utils.js"
+
     let state = {
         filename: "Untitled",
         path: "",
@@ -101,6 +103,13 @@
     }
 
     function rename() {
+        console.log(typeof(state.path))
+        if(state.path="" || state.path == undefined) return
+        
+        console.log(baseDirFromPath(state.path))
+
+        
+
 
     }
 
@@ -112,14 +121,7 @@
         state.contents = ev.detail.new;
     }
 
-    function nameFromPath(path) {
-        let pathStandardised = path.replace(/\\/g, '/')
 
-        
-        let fileNameExt = pathStandardised.substr(pathStandardised.lastIndexOf('/')+1)
-        let fileName = fileNameExt.substr(0,fileNameExt.lastIndexOf("."))
-        return fileName;
-    }
 </script>
 
 <header>
@@ -129,6 +131,7 @@
 		on:openEv={openFile}
 		on:saveEv={saveFile}
 		on:newEv={newFile}
+        on:renameEv={rename}
 	/>
 </header>
 <article>
