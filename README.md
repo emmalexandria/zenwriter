@@ -1,5 +1,5 @@
 
-![Logo](https://raw.githubusercontent.com/emmalexandria/zenwriter_design/main/zenwriterWordmark.png?token=GHSAT0AAAAAACIA7G3YP3TBLFLNQANOZYMQZJVKYWQ)
+![Logo](https://raw.githubusercontent.com/emmalexandria/zenwriter_design/main/zenwriterWordmark.png?token=GHSAT0AAAAAACIA7G3ZXVXZW5ZQDQGVOVL4ZJVLI5Q)
 
 
 # ZenWriter
