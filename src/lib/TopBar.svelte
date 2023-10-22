@@ -117,11 +117,6 @@
 		margin-right: auto;
 	}
 
-	.threedots {
-		margin: 0;
-		padding: 0;
-		margin-left: auto;
-	}
 
 	p.title {
 		font-family: 'EB Garamond';
@@ -134,7 +129,7 @@
 		outline: none;
 
 		width: max-content;
-		min-width: 16px;
+		min-width: 8px;
 		text-decoration: underline dotted;
 		max-width: 60%;
 		align-self: flex-start center;
@@ -148,6 +143,7 @@
 		color: var(--g100);
 		font-family: 'Open Sans';
 		font-size: 12px;
+		font-weight: bold;
 		width: 100%;
 
 		transition: opacity 0.1s ease-in-out;

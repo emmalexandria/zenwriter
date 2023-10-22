@@ -81,6 +81,7 @@
 			if (!filePath) return;
 			$state.path = filePath;
 			$state.filename = nameFromPath(filePath);
+            barComp.setTitle($state.filename);
 			await saveWithState();
 		} catch (err) {
 			console.error(err);
