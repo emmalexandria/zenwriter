@@ -77,9 +77,7 @@
 			<button on:click={newEv}>new</button>
 			<button on:click={openEv}>open</button>
 			<button on:click={saveEv}>save</button>
-			<span class="threedots">
-				<Icon icon="carbon:overflow-menu-horizontal" />
-			</span>
+
 		</end-items>
 	</div>
 	<p class="renameinfo" class:visible={titleFocused} contenteditable="false">
@@ -139,7 +137,7 @@
 
 		width: max-content;
 		min-width: 16px;
-		text-decoration: underline;
+		text-decoration: underline dotted;
 		max-width: 60%;
 		align-self: flex-start center;
 	}
