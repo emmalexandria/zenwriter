@@ -1,30 +1,38 @@
-# Zenwriter&#x20;
 
-**A zen Markdown writing experience**
-
+![Logo](https://raw.githubusercontent.com/emmalexandria/zenwriter_design/main/zenwriterWordmark.png?token=GHSAT0AAAAAACIA7G3ZXVXZW5ZQDQGVOVL4ZJVLI5Q)
 
 
-Zenwriter is a [Tauri](https://tauri.app) based Markdown editor which was thrown together in a couple of days. The editor itself relies heavily on [Milkdown](https://milkdown.dev/). As of right now, there are only builds available for 64 bit Windows, but I have the ability to build for MacOS and Linux and will do so soon.
+# ZenWriter
+**A simple markdown editor that gets out of your way**
+
+It's a text editor for those that want the ability to write formatted Markdown documents with absolutely no distraction.
+
+It consumes < 100mb of memory, nearly no CPU, and starts up near instantly. Builds are available for MacOS, Windows, and Linux in the release section.
+
+Built in [Tauri](https://tauri.app/) and [Sveltekit](https://kit.svelte.dev) using [Milkdown](https://milkdown.dev) for the editor.
+
+## Screenshots
+
+![App Screenshot](https://raw.githubusercontent.com/emmalexandria/zenwriter_design/main/zenwriter%20screenshot.png?token=GHSAT0AAAAAACIA7G3ZXCKDQKDEBFX2IEDUZJVLFEA)
 
 
+## Installation
 
-### Aims
+Binaries for MacOS, Windows, and Linux are available in the releases section.
 
-*   Fast to start, low memory usage
-*   Minimally distracting UI
-*   Simple but aesthetically pleasing rendering
+ZenWriter has no need for an installation directory, but there are installers available in `.dmg`, `.exe`, and `.msi`. 
 
-### Roadmap
+### Building from source
+To build from source, you'll require Rust and NodeJS. To build this app, clone the repository and then run `npm run tauri build`. The binaries can be found in /tauri-src/target/release.
 
-*   Get accurate wordcount functionality
-*   Move most of the backend logic to Rust to tidy up the frontend code
-*   Integration with system dark-mode
-*   Responsive text sizing according to window size
-*   System spellcheck disable
-*   Styled scrollbar
+    
+## Roadmap
 
+- Movement of nearly all logic into Rust
+- Custom colour schemes (incl syntax)
+- Continuous UI improvement
 
+## License
 
-### Warning
+[MIT](https://choosealicense.com/licenses/mit/)
 
-As I stated, I threw this together in a couple days. It's gonna be rough around the edges, probably for a little bit.&#x20;
