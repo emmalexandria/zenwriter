@@ -20,6 +20,7 @@
 		"eslint-plugin-svelte": "^2.30.0",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.10.1",
+		"prism-themes": "^1.9.0",
 		"svelte": "^4.0.5",
 		"vite": "^4.4.2"
 	},
@@ -30,6 +31,7 @@
 		"@milkdown/plugin-history": "^7.3.0",
 		"@milkdown/plugin-indent": "^7.3.0",
 		"@milkdown/plugin-listener": "^7.3.0",
+		"@milkdown/plugin-prism": "^7.3.0",
 		"@milkdown/preset-commonmark": "^7.3.0",
 		"@milkdown/preset-gfm": "^7.3.0",
 		"@milkdown/prose": "^7.3.0",
@@ -40,6 +42,7 @@
 		"commonmark": "^0.30.0",
 		"markdown-it": "^13.0.2",
 		"marked": "^9.1.2",
+		"refractor": "^4.8.1",
 		"scss": "^0.2.4"
 	}
 }

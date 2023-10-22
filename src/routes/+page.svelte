@@ -38,9 +38,10 @@
             state.path = selectedPath;
             state.filename = nameFromPath(selectedPath);
             state.contents = await readTextFile(selectedPath);
+            state.saved = true;
             editorComp.setContent(state.contents);
 
-            state.saved = true;
+            
 
         }
         
@@ -104,7 +105,10 @@
     }
 
     function markdownUpdated(ev) {
-        state.saved = false;
+        if(ev.detail.new != state.contents) {
+            state.saved = false;
+        }
+        
         state.contents = ev.detail.new;
     }
 

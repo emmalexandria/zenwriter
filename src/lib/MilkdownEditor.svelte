@@ -12,11 +12,19 @@
 	import { listener, listenerCtx } from '@milkdown/plugin-listener';
 	import { history } from '@milkdown/plugin-history';
 	import { indent } from '@milkdown/plugin-indent';
+    import {prism, prismConfig} from "@milkdown/plugin-prism"
 	import { createEventDispatcher } from 'svelte';
 	import { Slice } from '@milkdown/prose/model';
 
 	import { onMount } from 'svelte';
 
+    import rust from 'refractor/lang/rust'
+    import css from 'refractor/lang/css'
+    import js from 'refractor/lang/javascript'
+    import c from 'refractor/lang/c'
+    import cpp from 'refractor/lang/cpp'
+    import go from 'refractor/lang/go'
+    import 'prism-themes/themes/prism-material-light.css'
 	const dispatch = createEventDispatcher();
 
 	export let wordCount = 0;
@@ -30,10 +38,23 @@
 				ctx.get(listenerCtx).markdownUpdated((ctx, markdown, prevMarkdown) => {
 					markdownUpdatedEvent(markdown, prevMarkdown);
 				});
+
+                ctx.set(prismConfig.key, {
+                    configureRefractor : (refractor) => {
+                        refractor.register(js);
+                        refractor.register(css);
+                        refractor.register(rust);
+                        refractor.register(c);
+                        refractor.register(cpp);
+                        refractor.register(go);
+
+                    }
+                })
 			})
 			.use(commonmark)
 			.use(gfm)
 			.use(history)
+            .use(prism)
 			.use(indent)
 			.use(listener)
 			.create();
@@ -156,22 +177,19 @@
 		margin: 0;
 	}
 
-	div :global(blockquote) {
-		padding: 1rem;
-		border-radius: 6px;
-		background-color: #ffffff;
-	}
 
 	div :global([data-language]) {
 		background-color: #121212;
+        padding: 1rem;
+        border-radius: 4px;
+
+        overflow-x: auto;
 	}
 
 	div :global(code) {
-		padding: 3px;
-		background-color: #121212;
 		color: #f4f3f2;
 		font-family: 'Fira Code';
 		font-size: 16px;
-		border-radius: 2px;
+        max-width: 100%;
 	}
 </style>
