@@ -96,7 +96,7 @@
         }
         editorComp.setContent("");
         state.path = "";
-        state.name = "Untitled";
+        state.filename = "Untitled";
         state.contents = "";
     }
 
