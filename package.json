@@ -26,6 +26,8 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@fontsource/eb-garamond": "^5.0.15",
+		"@fontsource/open-sans": "^5.0.17",
 		"@milkdown/core": "^7.3.0",
 		"@milkdown/ctx": "^7.3.0",
 		"@milkdown/plugin-history": "^7.3.0",

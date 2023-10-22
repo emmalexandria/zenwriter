@@ -3,8 +3,8 @@
 	import MilkdownEditor from '../lib/MilkdownEditor.svelte';
 
 
-	let currentMarkdown;
-	let editorDiv;
+	import "@fontsource/eb-garamond"
+	import "@fontsource/open-sans"
 
 </script>
 

@@ -24,13 +24,15 @@
     import c from 'refractor/lang/c'
     import cpp from 'refractor/lang/cpp'
     import go from 'refractor/lang/go'
+
     import 'prism-themes/themes/prism-material-light.css'
+
 	const dispatch = createEventDispatcher();
 
 	export let wordCount = 0;
 
 	let editorRef;
-
+ 
 	function editor(dom) {
 		editorRef = Editor.make()
 			.config((ctx) => {
@@ -119,7 +121,7 @@
 			padding: 1rem;
 			margin-left: auto;
 
-			font-family: 'Open Sans';
+			font-family: 'EB Garamond';
 			font-size: 12px;
 			font-style: italic;
 			opacity: 0.8;
@@ -139,42 +141,49 @@
 		font-family: 'EB Garamond';
 		font-size: 40px;
 		margin: 0;
+        margin-bottom: 10px;
 	}
 
 	div :global(h2) {
 		font-family: 'EB Garamond';
 		font-size: 36px;
 		margin: 0;
+        margin-bottom: 9px;
 	}
 
 	div :global(h3) {
 		font-family: 'EB Garamond';
 		font-size: 32px;
 		margin: 0;
+        margin-bottom: 8px;
 	}
 
 	div :global(h4) {
 		font-family: 'EB Garamond';
 		font-size: 28px;
 		margin: 0;
+        margin-bottom: 7px;
 	}
 
 	div :global(h5) {
 		font-family: 'EB Garamond';
 		font-size: 24px;
 		margin: 0;
+        margin-bottom: 6px;
 	}
 
 	div :global(h6) {
 		font-family: 'EB Garamond';
 		font-size: 20px;
 		margin: 0;
+        margin-bottom: 5px;
 	}
 
 	div :global(p) {
 		font-family: 'Open Sans';
 		font-size: 16px;
 		margin: 0;
+        margin-bottom: 4px;
 	}
 
 
