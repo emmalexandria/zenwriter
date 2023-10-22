@@ -71,7 +71,7 @@
 	}
 
 	p {
-		font-family: "Playfair Display";
+		font-family: "EB Garamond";
 		margin: 0;
 		padding: 0;
 		font-style: italic;

@@ -115,37 +115,37 @@
 	}
 
 	div :global(h1) {
-		font-family: 'Playfair Display';
+		font-family: 'EB Garamond';
 		font-size: 40px;
 		margin: 0;
 	}
 
 	div :global(h2) {
-		font-family: 'Playfair Display';
+		font-family: 'EB Garamond';
 		font-size: 36px;
 		margin: 0;
 	}
 
 	div :global(h3) {
-		font-family: 'Playfair Display';
+		font-family: 'EB Garamond';
 		font-size: 32px;
 		margin: 0;
 	}
 
 	div :global(h4) {
-		font-family: 'Playfair Display';
+		font-family: 'EB Garamond';
 		font-size: 28px;
 		margin: 0;
 	}
 
 	div :global(h5) {
-		font-family: 'Playfair Display';
+		font-family: 'EB Garamond';
 		font-size: 24px;
 		margin: 0;
 	}
 
 	div :global(h6) {
-		font-family: 'Playfair Display';
+		font-family: 'EB Garamond';
 		font-size: 20px;
 		margin: 0;
 	}
