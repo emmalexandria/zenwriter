@@ -9,7 +9,6 @@ export function nameFromPath(path) {
 }
 
 export function baseDirFromPath(path) {
-    console.log(typeof(path))
     let pathStandardised = path.replace(/\\/g, '/');
 
     return pathStandardised.substr(0, pathStandardised.lastIndexOf('/'));

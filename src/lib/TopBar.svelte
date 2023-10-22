@@ -3,28 +3,24 @@
 
 	import Icon from '@iconify/svelte';
 
-	export let title = 'Untitled';
+	import {state} from "$lib/stores"
+	import {onMount} from 'svelte'
 
-	export let editableTitle;
-
-	export let fileSaved;
-
+	let editableTitle = '';
 	let titleFocused = false;
 
 	const dispatch = createEventDispatcher();
 
+	onMount(() => {
+		editableTitle = $state.filename;
+	})
+
 	function titleKeypress(ev) {
 		if (ev.key == 'Enter') {
 			ev.preventDefault();
-
-			title = editableTitle;
+			$state.filename = editableTitle;
+			document.activeElement.blur()
 			renameEv()
-			document.activeElement.blur()
-		}
-		if(ev.key=='Escape' || ev.key == "Esc") {
-			editableTitle = title;
-
-			document.activeElement.blur()
 		}
 	}
 
@@ -51,10 +47,12 @@
 	function focusOut() {
 		titleFocused = false;
 
-		editableTitle = title;
+		editableTitle = $state.filename;
 	}
 
-	$: editableTitle = title;
+	export const setTitle = (title) => {
+		editableTitle = title;
+	}
 </script>
 
 <div class="outer">
@@ -68,10 +66,10 @@
 			on:focusout={focusOut}
 			on:keydown={titleKeypress}
 		>
-			{title}
+			{editableTitle}
 		</p>
 
-		<span class="filesaved">{fileSaved ? '' : '*'}</span>
+		<span class="filesaved">{$state.saved ? '' : '*'}</span>
 
 		<end-items>
 			<button on:click={newEv}>new</button>
@@ -81,7 +79,7 @@
 		</end-items>
 	</div>
 	<p class="renameinfo" class:visible={titleFocused} contenteditable="false">
-		Enter to rename the file, escape to cancel
+		Press enter to rename
 	</p>
 </div>
 

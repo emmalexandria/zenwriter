@@ -26,7 +26,7 @@
         "all": false,
         "copyFile": false,
         "createDir": false,
-        "exists": false,
+        "exists": true,
         "readDir": false,
         "readFile": true,
         "removeDir": false,
