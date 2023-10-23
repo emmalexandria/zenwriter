@@ -26,6 +26,21 @@
         background-color: var(--bg);
 	}
 
+	:global(body::-webkit-scrollbar) {
+		width: 12px;
+	}
+
+	:global(body::-webkit-scrollbar-track) {
+		background: var(--bg400);
+	}
+
+	:global(body::-webkit-scrollbar-thumb) {
+		background-color: var(--w500);
+		border: 3px solid var(--bg400);
+		border-radius: 6px;
+	}
+
+
     app-container {
 		width: 100%;
     }
@@ -33,7 +48,8 @@
 	
     :root {
         --w500: #f4f3f2;
-        --bg: #F3EEE7;
+		--bg400: #dbd6d0;
+        --bg500: #F3EEE7;
         --g100: #121212;
     }
 </style>
