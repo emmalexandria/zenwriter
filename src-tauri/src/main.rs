@@ -5,7 +5,10 @@ mod files;
 
 use std::fs::{self};
 
-use tauri::api::{dialog::{self, blocking}, file};
+use tauri::api::{
+    dialog::{self, blocking},
+    file,
+};
 
 fn main() {
     tauri::Builder::default()
@@ -13,7 +16,8 @@ fn main() {
             rename_file,
             save_file,
             save_file_as,
-			open_file
+            open_file,
+			new_file
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
@@ -100,14 +104,13 @@ async fn save_file_as(filename: String, contents: String) -> String {
 
 #[tauri::command]
 async fn open_file() -> (String, String) {
-	let mut contents = String::new();
-	let mut file_path = String::new() ;
+    let mut contents = String::new();
+    let mut file_path = String::new();
 
     let path_buf = blocking::FileDialogBuilder::new()
         .add_filter(".md files", &["md"])
         .set_title("Open a Markdown file")
         .pick_file();
-
 
     let path = match path_buf {
         Some(p) => match p.to_str() {
@@ -117,15 +120,31 @@ async fn open_file() -> (String, String) {
         None => None,
     };
 
-	file_path = match path {
-		Some(s) => s,
-		None => String::from(""),
-	};
+    file_path = match path {
+        Some(s) => s,
+        None => String::from(""),
+    };
 
-	contents = match files::read_file(&file_path) {
-		Ok(c) => c,
-		Err(_) => String::from(""),
-	};
+    contents = match files::read_file(&file_path) {
+        Ok(c) => c,
+        Err(_) => String::from(""),
+    };
 
-	return (file_path, contents);
+    return (file_path, contents);
+}
+
+#[tauri::command]
+async fn new_file(saved: bool) -> bool {
+    if !saved {
+        if !show_confirm_box(
+        	"zenwriter",
+        	"Creating a new file will discard your current changes. Continue?",
+        	String::from("Confirm"),
+        	String::from("Cancel"),
+        ).await {
+			return false;
+		}
+    }
+
+    return true;
 }

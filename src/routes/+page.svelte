@@ -69,22 +69,15 @@
 	}
 
 	const newFile = async () => {
-		if ($state.saved != true) {
-			let conf = await confirm('This will discard your changes. Continue?', {
-				type: 'warning',
-				title: 'zenwriter',
-				cancelLabel: 'Cancel',
-				okLabel: 'Confirm'
-			});
-			if (!conf) return;
-		}
-		editorComp.setContent('');
-		$state.path = '';
-		$state.filename = 'Untitled';
-		$state.contents = '';
-        $state.saved = true;
+		if(await invoke("new_file", {saved: $state.saved})) {
+			editorComp.setContent('');
+			$state.path = '';
+			$state.filename = 'Untitled';
+			$state.contents = '';
+        	$state.saved = true;
 
-        barComp.setTitle($state.filename);
+        	barComp.setTitle($state.filename);
+		}
 	};
 
 	const rename = async () => {
