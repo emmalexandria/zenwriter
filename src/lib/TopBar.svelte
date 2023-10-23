@@ -90,9 +90,6 @@
 		display: flex;
 		flex-direction: row;
 		align-items: baseline;
-		
-
-		background-color: var(--bg);
 	}
 
 	div.outer {

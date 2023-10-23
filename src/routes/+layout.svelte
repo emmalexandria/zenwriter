@@ -23,7 +23,7 @@
 		margin: 0;
 		padding: 0;
 		height: 100%;
-        background-color: var(--bg);
+        background-color: var(--bg500);
 	}
 
 	:global(body::-webkit-scrollbar) {
@@ -50,6 +50,7 @@
         --w500: #f4f3f2;
 		--bg400: #dbd6d0;
         --bg500: #F3EEE7;
+		--bg600: #f4f0e9;
         --g100: #121212;
     }
 </style>

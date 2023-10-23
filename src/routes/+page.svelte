@@ -44,30 +44,6 @@
 		barComp.setTitle($state.filename);
 	}
 
-	/* const openFile = async () => {
-		try {
-			const selectedPath = await open({
-				multiple: false,
-				filters: [
-					{
-						extensions: ['md'],
-						name: '.md files'
-					}
-				],
-				title: 'Open markdown file'
-			});
-			if (!selectedPath) return;
-			$state.path = selectedPath;
-			$state.filename = nameFromPath(selectedPath);
-			$state.contents = await readTextFile(selectedPath);
-			$state.saved = true;
-			editorComp.setContent($state.contents);
-            barComp.setTitle($state.filename);
-		} catch (err) {
-			console.error(err);
-		}
-	}; */
-
 	function saveFile() {
 		if ($state.path === undefined || $state.path === '') {
 			saveAs();
