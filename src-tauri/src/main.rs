@@ -68,7 +68,7 @@ async fn save_file_as(filename: String, contents: String) -> String {
 		.add_filter(".md files", &["md"])
 		.set_file_name(&filename)
 		.set_title("Save Markdown file as")
-		.pick_file();
+		.save_file();
 
 	let path = match path_buf {
 		Some(p) => match p.to_str() {Some(s) => Some(String::from(s)), None => None},

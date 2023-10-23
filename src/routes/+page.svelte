@@ -62,13 +62,22 @@
 	}
 
 	const saveWithState = async () => {
-		let str = await invoke("save_file", {path: $state.path, contents: $state.contents})
+		let str = await invoke("save_file", {path: $state.path, contents: $state.contents});
 		if(str != "") {
 			$state.saved = true;
 		}
 	}
 
 	const saveAs = async () => {
+		let path = await invoke("save_file_as", {filename: $state.filename, contents: $state.contents});
+
+		if(path == "") return;
+		$state.path = path;
+		$state.filename = nameFromPath(path);
+		barComp.setTitle($state.filename);
+	}
+
+	/* const saveAs = async () => {
 		try {
 			const filePath = await save({
 				filters: [
@@ -88,7 +97,7 @@
 		} catch (err) {
 			console.error(err);
 		}
-	};
+	}; */
 
 	const newFile = async () => {
 		if ($state.saved != true) {
