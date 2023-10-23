@@ -30,6 +30,21 @@
 	});
 
 	const openFile = async () => {
+		const newFile = await invoke("open_file");
+		let newFilePath = newFile[0];
+		let newFileContent = newFile[1];
+		
+		if(newFilePath == "") return;
+		$state.path = newFilePath;
+		$state.filename = nameFromPath(newFilePath);
+		$state.contents = newFileContent;
+		$state.saved = true;
+
+		editorComp.setContent($state.contents);
+		barComp.setTitle($state.filename);
+	}
+
+	/* const openFile = async () => {
 		try {
 			const selectedPath = await open({
 				multiple: false,
@@ -51,7 +66,7 @@
 		} catch (err) {
 			console.error(err);
 		}
-	};
+	}; */
 
 	function saveFile() {
 		if ($state.path === undefined || $state.path === '') {
@@ -76,28 +91,6 @@
 		$state.filename = nameFromPath(path);
 		barComp.setTitle($state.filename);
 	}
-
-	/* const saveAs = async () => {
-		try {
-			const filePath = await save({
-				filters: [
-					{
-						name: 'Markdown',
-						extensions: ['md']
-					}
-				],
-				title: 'Save as',
-				defaultPath: $state.filename + '.md'
-			});
-			if (!filePath) return;
-			$state.path = filePath;
-			$state.filename = nameFromPath(filePath);
-            barComp.setTitle($state.filename);
-			await saveWithState();
-		} catch (err) {
-			console.error(err);
-		}
-	}; */
 
 	const newFile = async () => {
 		if ($state.saved != true) {
