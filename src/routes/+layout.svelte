@@ -42,6 +42,10 @@
 		border-radius: 6px;
 	}
 
+	:global(::selection) {
+		background-color: var(--bg300)
+	}
+
 
     app-container {
 		width: 100%;
@@ -50,6 +54,7 @@
 	
     :root {
         --w500: #f4f3f2;
+		--bg300: #c2beb9;
 		--bg400: #dbd6d0;
         --bg500: #F3EEE7;
 		--bg600: #f4f0e9;

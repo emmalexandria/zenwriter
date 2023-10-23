@@ -50,6 +50,7 @@
 		editableTitle = $state.filename;
 	}
 
+
 	export const setTitle = (title) => {
 		editableTitle = title;
 	}
@@ -75,7 +76,6 @@
 			<button on:click={newEv}>new</button>
 			<button on:click={openEv}>open</button>
 			<button on:click={saveEv}>save</button>
-
 		</end-items>
 	</div>
 	<p class="renameinfo" class:visible={titleFocused} contenteditable="false">
@@ -106,31 +106,40 @@
 
 	span.filesaved {
 		font-family: 'Open Sans';
-		font-size: 16px;
+		font-size: 12px;
 		color: var(--g100);
 		opacity: 0.6;
+		margin-top:4px;
+		margin-left: 2px;
 		margin-right: 12px;
 
 		margin-right: auto;
+		align-self: flex-start;
 	}
 
 
 	p.title {
+		position: relative;
 		font-family: 'EB Garamond';
 		margin: 0;
 		padding: 0;
-		font-style: italic;
 		font-size: 16pt;
 		color: var(--g100);
 
 		outline: none;
 
 		width: max-content;
-		min-width: 8px;
-		text-decoration: underline dotted;
+		min-width: 1ch;
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 2px;
+		text-decoration-color: var(--g100);
 		max-width: 60%;
 		align-self: flex-start center;
+
 	}
+
+	
 
 	p.renameinfo {
 		display: none;
