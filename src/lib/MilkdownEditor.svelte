@@ -105,7 +105,7 @@
 			const fragment = DOMSerializer.fromSchema(schema).serializeFragment(view.state.doc.content);
 
 			div.appendChild(fragment);
-			
+
 			//this is janky but append a space in order to force newlines to be recognised as things which split words
 			div.appendChild(document.createTextNode(" "))
 
@@ -232,5 +232,18 @@
 		font-family: 'Fira Code';
 		font-size: 16px;
 		max-width: 100%;
+	}
+
+	div :global(a) {
+		color: var(--a);
+
+		&:visited {
+			color: var(--aVisited);
+		}
+	}
+
+	div :global(img) {
+		max-width: 100%;
+		border-radius: 4px;
 	}
 </style>

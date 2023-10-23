@@ -59,6 +59,9 @@
         --bg500: #F3EEE7;
 		--bg600: #f4f0e9;
         --g100: #121212;
+
+		--a: #efb762;
+		--aVisited: #bc6e49;
     }
 
 </style>
