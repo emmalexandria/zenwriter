@@ -5,6 +5,7 @@ mod files;
 
 use std::fs::{self};
 
+
 use tauri::api::{
     dialog::{self, blocking},
     file,
@@ -17,7 +18,7 @@ fn main() {
             save_file,
             save_file_as,
             open_file,
-			new_file
+			new_file,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
@@ -148,3 +149,5 @@ async fn new_file(saved: bool) -> bool {
 
     return true;
 }
+
+

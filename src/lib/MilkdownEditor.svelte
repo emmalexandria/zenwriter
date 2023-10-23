@@ -4,9 +4,13 @@
 		rootCtx,
 		defaultValueCtx,
 		editorCtx,
+		schemaCtx,
 		parserCtx,
 		editorViewCtx
 	} from '@milkdown/core';
+
+	import { DOMSerializer } from '@milkdown/prose/model';
+
 	import { gfm } from '@milkdown/preset-gfm';
 	import { commonmark } from '@milkdown/preset-commonmark';
 	import { listener, listenerCtx } from '@milkdown/plugin-listener';
@@ -15,8 +19,6 @@
 	import { prism, prismConfig } from '@milkdown/plugin-prism';
 	import { createEventDispatcher } from 'svelte';
 	import { Slice } from '@milkdown/prose/model';
-
-	import { onMount } from 'svelte';
 
 	import rust from 'refractor/lang/rust';
 	import css from 'refractor/lang/css';
@@ -29,7 +31,7 @@
 
 	const dispatch = createEventDispatcher();
 
-	export let wordCount = 0;
+	let currentText;
 
 	let editorRef;
 
@@ -61,21 +63,23 @@
 			.create();
 	}
 
-	function markdownUpdatedEvent(current, previous) {
+	const markdownUpdatedEvent = async(current, previous) => {
+		updateCurrentText();
+
 		dispatch('markdownUpdate', {
 			new: current,
 			old: previous
 		});
-
-		wordCount = countWords(current);
 	}
+	
 
 	function countWords(text) {
+		if (text == undefined) return 0;
 		let count = text.split(' ').filter((n) => {
 			return n != '';
 		}).length;
 
-		return Math.ceil(count / 5) * 5;
+		return count;
 	}
 
 	export const setContent = async (content) => {
@@ -89,10 +93,29 @@
 			view.dispatch(state.tr.replace(0, state.doc.content.size, new Slice(doc.content, 0, 0)));
 		});
 	};
+
+	$: console.log(currentText)
+
+	export const updateCurrentText = async () => {
+		let res = await editorRef;
+		res.action((ctx) => {
+			const div = document.createElement('div');
+			const schema = ctx.get(schemaCtx);
+			const view = ctx.get(editorViewCtx);
+			const fragment = DOMSerializer.fromSchema(schema).serializeFragment(view.state.doc.content);
+
+			div.appendChild(fragment);
+			
+			//this is janky but append a space in order to force newlines to be recognised as things which split words
+			div.appendChild(document.createTextNode(" "))
+
+			currentText = div.innerText;
+		});
+	};
 </script>
 
 <div class="editorDiv" use:editor />
-<div class="wordcount"><p>~{wordCount} words</p></div>
+<div class="wordcount"><p>{countWords(currentText)} words</p></div>
 
 <style lang="scss">
 	div.editorDiv {
@@ -181,7 +204,6 @@
 		margin-bottom: 4px;
 	}
 
-
 	div :global([data-language]) {
 		background-color: #121212;
 		padding: 1rem;
@@ -205,15 +227,10 @@
 		}
 	}
 
-	
-
 	div :global(code) {
 		color: #f4f3f2;
 		font-family: 'Fira Code';
 		font-size: 16px;
 		max-width: 100%;
-
-		
 	}
-
 </style>

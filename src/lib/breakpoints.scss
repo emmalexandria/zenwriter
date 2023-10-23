@@ -1,0 +1,11 @@
+@mixin for-small-window {
+    @media (max-width: 1199px) {
+        @content;
+    }
+}
+
+@mixin for-big-window-up {
+    @media (min-width: 1200px) {
+        @content;
+    }
+}

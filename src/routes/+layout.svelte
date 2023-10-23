@@ -13,6 +13,8 @@
 </app-container>
 
 <style lang="scss">
+	@use "../lib/breakpoints.scss" as *;
+
 	:global(html) {
 		height: 100%;
 		margin: 0;
@@ -53,4 +55,5 @@
 		--bg600: #f4f0e9;
         --g100: #121212;
     }
+
 </style>

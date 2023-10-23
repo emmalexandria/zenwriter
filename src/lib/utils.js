@@ -1,4 +1,17 @@
 //this probably doesnt play well with unix, double check that once you have some builds
+
+import {
+    Editor,
+    rootCtx,
+    defaultValueCtx,
+    editorCtx,
+    schemaCtx,
+    editorViewCtx
+} from '@milkdown/core';
+
+
+import { DOMSerializer } from '@milkdown/prose/model';
+
 export function nameFromPath(path) {
     let pathStandardised = path.replace(/\\/g, '/');
 
@@ -13,3 +26,4 @@ export function baseDirFromPath(path) {
 
     return pathStandardised.substr(0, pathStandardised.lastIndexOf('/'));
 }
+
