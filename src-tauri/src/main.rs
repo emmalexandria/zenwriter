@@ -3,11 +3,9 @@
 
 mod files;
 
-use std::fs::{self, File};
-use std::path::{Path};
+use std::fs::{self};
 
-use tauri::api::dialog::{self, MessageDialogBuilder, blocking};
-use tauri::api::file;
+use tauri::api::dialog::{self, blocking};
 
 fn main() {
     tauri::Builder::default()
@@ -18,7 +16,7 @@ fn main() {
 
 #[tauri::command]
 async fn rename_file(old_path: String, new_path: String) -> bool {
-    if file_exists(&new_path) {
+    if files::file_exists(&new_path) {
         let overwrite_confirmed = show_confirm_box(
 			"Rename file", 
 			"Renaming the file to this requires overwriting an existing file, continue?", 
@@ -39,9 +37,7 @@ async fn rename_file(old_path: String, new_path: String) -> bool {
     return true;
 }
 
-fn file_exists(path: &String) -> bool {
-    Path::new(path).exists()
-}
+
 
 async fn show_confirm_box(title: &str, message: &str, ok_string: String, cancel_string: String) -> bool {
 	blocking::MessageDialogBuilder::new(title, message)
@@ -81,7 +77,7 @@ async fn save_file_as(filename: String, contents: String) -> String {
 
 	match files::write_file(&path.clone().unwrap(), &contents) {
 		Ok(()) => return path.unwrap(),
-		Err(E) => return String::from(""),
+		Err(_) => return String::from(""),
 	};
 }
 
