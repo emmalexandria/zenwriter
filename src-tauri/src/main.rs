@@ -1,7 +1,9 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use std::fs;
+mod files;
+
+use std::fs::{self, File};
 use std::path::{Path};
 
 use tauri::api::dialog::{self, MessageDialogBuilder, blocking};
@@ -9,14 +11,13 @@ use tauri::api::file;
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![rename_file])
+        .invoke_handler(tauri::generate_handler![rename_file, save_file, save_file_as])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
 
 #[tauri::command]
 async fn rename_file(old_path: String, new_path: String) -> bool {
-
     if file_exists(&new_path) {
         let overwrite_confirmed = show_confirm_box(
 			"Rename file", 
@@ -49,5 +50,38 @@ async fn show_confirm_box(title: &str, message: &str, ok_string: String, cancel_
 		.show()
 }
 
-//internal rename function
-fn rename(old_path: String, new_path: String) {}
+//expects the filename and the base directory seperately, returns the new path
+#[tauri::command] 
+async fn save_file(path: String, contents: String) -> String {
+	let result = files::write_file(&path, &contents);
+
+	match result {
+		Ok(()) => path,
+		Err(_) => String::from("")
+	}
+}
+
+//this function could probably be way more dense but i like doing early returns instead of intense nesting
+#[tauri::command]
+async fn save_file_as(filename: String, contents: String) -> String {
+	let path_buf = blocking::FileDialogBuilder::new()
+		.add_filter(".md files", &["md"])
+		.set_file_name(&filename)
+		.set_title("Save Markdown file as")
+		.pick_file();
+
+	let path = match path_buf {
+		Some(p) => match p.to_str() {Some(s) => Some(String::from(s)), None => None},
+		None => None,
+	};
+
+	if path.is_none() {
+		return String::from("");
+	}
+
+	match files::write_file(&path.clone().unwrap(), &contents) {
+		Ok(()) => return path.unwrap(),
+		Err(E) => return String::from(""),
+	};
+}
+

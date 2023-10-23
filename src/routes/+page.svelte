@@ -62,9 +62,11 @@
 	}
 
 	const saveWithState = async () => {
-		await writeTextFile($state.path, $state.contents);
-		$state.saved = true;
-	};
+		let str = await invoke("save_file", {path: $state.path, contents: $state.contents})
+		if(str != "") {
+			$state.saved = true;
+		}
+	}
 
 	const saveAs = async () => {
 		try {
