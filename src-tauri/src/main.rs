@@ -8,6 +8,7 @@ use std::fs::{self};
 use std::sync::Mutex;
 use fs4::FileExt;
 
+use tauri::Window;
 use tauri::api::{
     dialog::{self, blocking},
     file,
@@ -23,6 +24,7 @@ fn main() {
             save_file_as,
             open_file,
 			new_file,
+			confirm_unsaved_exit
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
@@ -152,6 +154,16 @@ async fn new_file(saved: bool) -> bool {
     }
 
     return true;
+}
+
+#[tauri::command]
+async fn confirm_unsaved_exit() -> bool {
+	show_confirm_box(
+		"zenwriter",
+		"You have unsaved changes. Are you sure you'd like to exit?",
+		String::from("Confirm"),
+		String::from("Cancel"),
+	).await
 }
 
 

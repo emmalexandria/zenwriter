@@ -34,6 +34,9 @@
         "renameFile": true,
         "scope": [],
         "writeFile": true
+      },
+      "window": {
+        "close": true
       }
     },
     "bundle": {

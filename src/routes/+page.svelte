@@ -4,10 +4,9 @@
 
 	import { state } from '$lib/stores.js';
 
-	import { exists, readTextFile, renameFile, writeTextFile } from '@tauri-apps/api/fs';
-	import { open, save, confirm } from '@tauri-apps/api/dialog';
     import {invoke} from "@tauri-apps/api/tauri"
-	import {emit} from "@tauri-apps/api/event"
+	import {appWindow} from "@tauri-apps/api/window"
+
 
 	import { nameFromPath, baseDirFromPath } from '$lib/utils.js';
 	import { onMount } from 'svelte';
@@ -17,9 +16,9 @@
 
 	/* TODO: 
         [x] - Implement ability to erase content of editor 
-        [ ] - Implement renaming
-        [ ] - Cover case that what you want to rename file to is already existing
-        [ ] - Implement 'file rename' event on TopBar so that user intent is retained 
+        [x] - Implement renaming
+        [x] - Cover case that what you want to rename file to is already existing
+        [x] - Implement 'file rename' event on TopBar so that user intent is retained 
     
     */
 
@@ -29,6 +28,16 @@
         $state.path='';
         $state.content='';
 	});
+
+	appWindow.onCloseRequested(async (event) => {
+		if(!$state.saved) {
+			await invoke('confirm_unsaved_exit').then((conf) => {
+				if(!conf) {
+					event.preventDefault()
+				}
+			});
+		}
+	})
 
 	const openFile = async () => {
 		const newFile = await invoke("open_file");
@@ -55,9 +64,9 @@
 
 	const saveWithState = async () => {
 		let str = await invoke("save_file", {path: $state.path, contents: $state.contents});
-		if(str != "") {
-			$state.saved = true;
-		}
+		if(str == "") return
+		$state.saved = true;
+		
 	}
 
 	const saveAs = async () => {
