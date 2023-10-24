@@ -75,6 +75,7 @@
 		if(path == "") return;
 		$state.path = path;
 		$state.filename = nameFromPath(path);
+		$state.saved = true;
 		barComp.setTitle($state.filename);
 	}
 
