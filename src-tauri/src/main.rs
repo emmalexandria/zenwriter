@@ -5,6 +5,7 @@ mod files;
 
 use std::fs::{self};
 use std::sync::Mutex;
+use fs4::FileExt;
 
 use tauri::api::{
     dialog::{self, blocking},
