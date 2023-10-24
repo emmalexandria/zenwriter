@@ -4,15 +4,14 @@
 
 	import { state } from '$lib/stores.js';
 
-    import {invoke} from "@tauri-apps/api/tauri"
-	import {appWindow} from "@tauri-apps/api/window"
-
+	import { invoke } from '@tauri-apps/api/tauri';
+	import { appWindow } from '@tauri-apps/api/window';
 
 	import { nameFromPath, baseDirFromPath } from '$lib/utils.js';
 	import { onMount } from 'svelte';
 
 	let editorComp;
-    let barComp;
+	let barComp;
 
 	/* TODO: 
         [x] - Implement ability to erase content of editor 
@@ -22,29 +21,29 @@
     
     */
 
-    onMount(() => {
+	onMount(() => {
 		$state.filename = 'Untitled';
 		$state.saved = true;
-        $state.path='';
-        $state.content='';
+		$state.path = '';
+		$state.content = '';
 	});
 
 	appWindow.onCloseRequested(async (event) => {
-		if(!$state.saved) {
+		if (!$state.saved) {
 			await invoke('confirm_unsaved_exit').then((conf) => {
-				if(!conf) {
-					event.preventDefault()
+				if (!conf) {
+					event.preventDefault();
 				}
 			});
 		}
-	})
+	});
 
 	const openFile = async () => {
-		const newFile = await invoke("open_file");
+		const newFile = await invoke('open_file');
 		let newFilePath = newFile[0];
 		let newFileContent = newFile[1];
-		
-		if(newFilePath == "") return;
+
+		if (newFilePath == '') return;
 		$state.path = newFilePath;
 		$state.filename = nameFromPath(newFilePath);
 		$state.contents = newFileContent;
@@ -52,7 +51,7 @@
 
 		editorComp.setContent($state.contents);
 		barComp.setTitle($state.filename);
-	}
+	};
 
 	function saveFile() {
 		if ($state.path === undefined || $state.path === '') {
@@ -63,47 +62,48 @@
 	}
 
 	const saveWithState = async () => {
-		let str = await invoke("save_file", {path: $state.path, contents: $state.contents});
-		if(str == "") return
+		let str = await invoke('save_file', { path: $state.path, contents: $state.contents });
+		if (str == '') return;
 		$state.saved = true;
-		
-	}
+	};
 
 	const saveAs = async () => {
-		let path = await invoke("save_file_as", {filename: $state.filename, contents: $state.contents});
+		let path = await invoke('save_file_as', {
+			filename: $state.filename,
+			contents: $state.contents
+		});
 
-		if(path == "") return;
+		if (path == '') return;
 		$state.path = path;
 		$state.filename = nameFromPath(path);
 		$state.saved = true;
 		barComp.setTitle($state.filename);
-	}
+	};
 
 	const newFile = async () => {
-		if(await invoke("new_file", {saved: $state.saved})) {
+		if (await invoke('new_file', { saved: $state.saved })) {
 			editorComp.setContent('');
 			$state.path = '';
 			$state.filename = 'Untitled';
 			$state.contents = '';
-        	$state.saved = true;
+			$state.saved = true;
 
-        	barComp.setTitle($state.filename);
+			barComp.setTitle($state.filename);
 		}
 	};
 
 	const rename = async () => {
-		if (($state.path == '' || $state.path == undefined)) return;
-        let newPath = baseDirFromPath($state.path) + `/${$state.filename}.md`;
-    
-        await invoke('rename_file', {oldPath: $state.path, newPath: newPath}).then(success => {
-            if(success) {
-                $state.path = newPath;
-            }
-            else {
-                $state.filename = nameFromPath($state.path);
-            }
-        });
-	}
+		if ($state.path == '' || $state.path == undefined) return;
+		let newPath = baseDirFromPath($state.path) + `/${$state.filename}.md`;
+
+		await invoke('rename_file', { oldPath: $state.path, newPath: newPath }).then((success) => {
+			if (success) {
+				$state.path = newPath;
+			} else {
+				$state.filename = nameFromPath($state.path);
+			}
+		});
+	};
 
 	function markdownUpdated(ev) {
 		if (ev.detail.new != $state.contents) {
@@ -112,13 +112,11 @@
 
 		$state.contents = ev.detail.new;
 	}
-
-
 </script>
 
 <header>
 	<TopBar
-        bind:this={barComp}
+		bind:this={barComp}
 		on:openEv={openFile}
 		on:saveEv={saveFile}
 		on:newEv={newFile}

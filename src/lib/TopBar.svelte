@@ -3,8 +3,9 @@
 
 	import Icon from '@iconify/svelte';
 
-	import {state} from "$lib/stores"
-	import {onMount} from 'svelte'
+	import { state } from '$lib/stores';
+	import { onMount } from 'svelte';
+	import icon from '@iconify/svelte';
 
 	let editableTitle = '';
 	let titleFocused = false;
@@ -13,14 +14,14 @@
 
 	onMount(() => {
 		editableTitle = $state.filename;
-	})
+	});
 
 	function titleKeypress(ev) {
 		if (ev.key == 'Enter') {
 			ev.preventDefault();
 			$state.filename = editableTitle;
-			document.activeElement.blur()
-			renameEv()
+			document.activeElement.blur();
+			renameEv();
 		}
 	}
 
@@ -50,10 +51,9 @@
 		editableTitle = $state.filename;
 	}
 
-
 	export const setTitle = (title) => {
 		editableTitle = title;
-	}
+	};
 </script>
 
 <div class="outer">
@@ -76,6 +76,9 @@
 			<button on:click={newEv}>new</button>
 			<button on:click={openEv}>open</button>
 			<button on:click={saveEv}>save</button>
+			<span class="icon">
+				<Icon icon="mdi:cog" inline={true} height={'24px'} />
+			</span>
 		</end-items>
 	</div>
 	<p class="renameinfo" class:visible={titleFocused} contenteditable="false">
@@ -101,7 +104,21 @@
 	}
 
 	end-items {
-		align-self: flex-end center;
+		font-size: 16px;
+		display: flex;
+		align-items: center;
+	}
+
+	.icon {
+		color: #121212;
+		margin:0;
+		padding:0;
+		align-self: center;
+		margin-left: 4px;
+		&:hover {
+			color: var(--aVisited);
+			cursor: pointer;
+		}
 	}
 
 	span.filesaved {
@@ -109,14 +126,13 @@
 		font-size: 12px;
 		color: var(--g100);
 		opacity: 0.6;
-		margin-top:4px;
+		margin-top: 4px;
 		margin-left: 2px;
 		margin-right: 12px;
 
 		margin-right: auto;
 		align-self: flex-start;
 	}
-
 
 	p.title {
 		position: relative;
@@ -136,10 +152,7 @@
 		text-decoration-color: var(--g100);
 		max-width: 60%;
 		align-self: flex-start center;
-
 	}
-
-	
 
 	p.renameinfo {
 		display: none;
