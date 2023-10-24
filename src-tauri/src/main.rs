@@ -22,10 +22,6 @@ struct EditorState {
 
 
 fn main() {
-	let args: Vec<String> = env::args().collect();
-	println!("Args:");
-	for arg in args {println!("{}", arg);}
-
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             rename_file,
