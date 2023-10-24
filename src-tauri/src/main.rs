@@ -4,12 +4,20 @@
 mod files;
 
 use std::fs::{self};
-
+use std::sync::Mutex;
 
 use tauri::api::{
     dialog::{self, blocking},
     file,
 };
+
+struct EditorState {
+	filename: Mutex<String>,
+	path: Mutex<String>,
+	contents: Mutex<String>,
+	saved: Mutex<bool>,
+}
+
 
 fn main() {
     tauri::Builder::default()
