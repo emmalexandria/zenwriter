@@ -13,12 +13,6 @@ use tauri::api::{
     file,
 };
 
-struct EditorState {
-	filename: Mutex<String>,
-	path: Mutex<String>,
-	contents: Mutex<String>,
-	saved: Mutex<bool>,
-}
 
 
 fn main() {

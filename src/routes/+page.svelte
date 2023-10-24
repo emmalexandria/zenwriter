@@ -7,6 +7,7 @@
 	import { exists, readTextFile, renameFile, writeTextFile } from '@tauri-apps/api/fs';
 	import { open, save, confirm } from '@tauri-apps/api/dialog';
     import {invoke} from "@tauri-apps/api/tauri"
+	import {emit} from "@tauri-apps/api/event"
 
 	import { nameFromPath, baseDirFromPath } from '$lib/utils.js';
 	import { onMount } from 'svelte';
