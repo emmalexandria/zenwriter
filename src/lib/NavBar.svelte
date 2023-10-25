@@ -6,6 +6,7 @@
 	export let titleComp;
 
     let settingsOpen = false;
+    let sidebarOpen = false;
 </script>
 
 <div>
