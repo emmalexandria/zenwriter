@@ -1,8 +1,11 @@
 <script>
 	import TitleBar from '$lib/TitleBar.svelte';
 	import SwitchingIcon from '$lib/SwitchingIcon.svelte';
+	import SettingsModal from './SettingsModal.svelte';
 
 	export let titleComp;
+
+    let settingsOpen = false;
 </script>
 
 <div>
@@ -11,9 +14,11 @@
 	</span>
 	<TitleBar bind:this={titleComp} on:openEv on:saveEv on:newEv on:renameEv />
 	<span class="icon">
-		<SwitchingIcon icon1="fluent:settings-24-regular" icon2="fluent:settings-24-filled" />
+		<SwitchingIcon icon1="fluent:settings-24-regular" icon2="fluent:settings-24-filled" bind:switched={settingsOpen} on:click={() => {settingsOpen = !settingsOpen}}/>
 	</span>
 </div>
+
+<SettingsModal bind:showModal={settingsOpen}/>
 
 <style>
 	div {

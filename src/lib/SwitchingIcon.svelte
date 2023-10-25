@@ -3,7 +3,7 @@
     import {fade} from 'svelte/transition'
 
     export let icon1;
-    export let icon2 = "";
+    export let icon2 = icon1;
     export let switched = false;
     
     export let height = "32px";
@@ -11,19 +11,23 @@
 
 <icon-container>
 {#if !switched}
-<div on:click out:fade={{delay: 0, duration: 50}} in:fade={{delay: 50, duration: 50}}>
+<button on:click out:fade={{delay: 0, duration: 50}} in:fade={{delay: 50, duration: 50}}>
     <Icon icon={icon1} height={height} style="display: block"/>
-</div>
+</button>
 {:else}
-<div on:click out:fade={{delay: 0, duration: 50}} in:fade={{delay: 50, duration: 50}}>
+<button on:click out:fade={{delay: 0, duration: 50}} in:fade={{delay: 50, duration: 50}}>
     <Icon icon={icon2} height={height} style="display: block"/>
-</div>
+</button>
 {/if}
 
 </icon-container>
 
 <style lang="scss">
-    div {
+    button {
+        background-color: unset;
+        border:unset;
+
+
         grid-row: 1;
         grid-column: 1;
         padding: unset;
