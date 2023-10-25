@@ -1,5 +1,5 @@
 <script>
-	import TopBar from '$lib/TopBar.svelte';
+	import NavBar from '$lib/NavBar.svelte';
 	import MilkdownEditor from '$lib/MilkdownEditor.svelte';
 
 	import { state } from '$lib/stores.js';
@@ -9,9 +9,11 @@
 
 	import { nameFromPath, baseDirFromPath } from '$lib/utils.js';
 	import { onMount } from 'svelte';
+	import Icon from '@iconify/svelte';
+	import SwitchingIcon from '../lib/SwitchingIcon.svelte';
 
 	let editorComp;
-	let barComp;
+	let titleComp;
 
 	/* TODO: 
         [x] - Implement ability to erase content of editor 
@@ -50,7 +52,7 @@
 		$state.saved = true;
 
 		editorComp.setContent($state.contents);
-		barComp.setTitle($state.filename);
+		titleComp.setTitle($state.filename);
 	};
 
 	function saveFile() {
@@ -77,7 +79,7 @@
 		$state.path = path;
 		$state.filename = nameFromPath(path);
 		$state.saved = true;
-		barComp.setTitle($state.filename);
+		titleComp.setTitle($state.filename);
 	};
 
 	const newFile = async () => {
@@ -88,7 +90,7 @@
 			$state.contents = '';
 			$state.saved = true;
 
-			barComp.setTitle($state.filename);
+			titleComp.setTitle($state.filename);
 		}
 	};
 
@@ -114,17 +116,17 @@
 	}
 </script>
 
+
 <header>
-	<TopBar
-		bind:this={barComp}
-		on:openEv={openFile}
-		on:saveEv={saveFile}
-		on:newEv={newFile}
-		on:renameEv={rename}
-	/>
+	<NavBar 
+	bind:titleComp
+	on:openEv={openFile}
+	on:saveEv={saveFile}
+	on:newEv={newFile}
+	on:renameEv={rename}/>
 </header>
 <article>
-	<MilkdownEditor on:markdownUpdate={markdownUpdated} bind:this={editorComp} />
+	<MilkdownEditor on:markdownUpdate={markdownUpdated} bind:this={editorComp}  />
 </article>
 
 <style lang="scss">
@@ -134,7 +136,6 @@
 	}
 
 	header {
-		width: 60%;
-		margin: 0 auto;
+		width: 100%;
 	}
 </style>

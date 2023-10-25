@@ -29,6 +29,8 @@
 
 	import 'prism-themes/themes/prism-material-light.css';
 
+	import {focused} from "$lib/stores"
+
 	const dispatch = createEventDispatcher();
 
 	let currentText;
@@ -94,8 +96,6 @@
 		});
 	};
 
-	$: console.log(currentText)
-
 	export const updateCurrentText = async () => {
 		let res = await editorRef;
 		res.action((ctx) => {
@@ -114,8 +114,10 @@
 	};
 </script>
 
-<div class="editorDiv" use:editor />
-<div class="wordcount"><p>{countWords(currentText)} words</p></div>
+<div class="editorDiv" use:editor/>
+<div class="wordcount">
+	<p>{countWords(currentText)} words</p>
+</div>
 
 <style lang="scss">
 	div.editorDiv {

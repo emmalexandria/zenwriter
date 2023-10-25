@@ -1,8 +1,4 @@
 <script>
-	import TopBar from '../lib/TopBar.svelte';
-	import MilkdownEditor from '../lib/MilkdownEditor.svelte';
-
-
 	import "@fontsource/eb-garamond"
 	import "@fontsource/open-sans"
 
@@ -45,7 +41,6 @@
 	:global(::selection) {
 		background-color: var(--bg300)
 	}
-
 
     app-container {
 		width: 100%;

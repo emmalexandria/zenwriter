@@ -1,11 +1,11 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
 
-	import Icon from '@iconify/svelte';
 
 	import { state } from '$lib/stores';
 	import { onMount } from 'svelte';
-	import icon from '@iconify/svelte';
+
+	import {fade} from 'svelte/transition'
 
 	let editableTitle = '';
 	let titleFocused = false;
@@ -56,7 +56,7 @@
 	};
 </script>
 
-<div class="outer">
+<div class="outer" out:fade={{delay:0, duration: 50}}>
 	<div class="container">
 		<p
 			class="title"
@@ -76,9 +76,7 @@
 			<button on:click={newEv}>new</button>
 			<button on:click={openEv}>open</button>
 			<button on:click={saveEv}>save</button>
-			<span class="icon">
-				<Icon icon="mdi:cog" inline={true} height={'24px'} />
-			</span>
+			
 		</end-items>
 	</div>
 	<p class="renameinfo" class:visible={titleFocused} contenteditable="false">

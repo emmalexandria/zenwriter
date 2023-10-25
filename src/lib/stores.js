@@ -6,3 +6,5 @@ export const state = writable({
     contents: "",
     saved: true,
 })
+
+export const focused = writable(false);
