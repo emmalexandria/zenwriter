@@ -1,6 +1,7 @@
 <script>
-	import NavBar from '$lib/NavBar.svelte';
+	import TitleBar from '$lib/TitleBar.svelte';
 	import MilkdownEditor from '$lib/MilkdownEditor.svelte';
+	import SettingsModal from '$lib/Settings/SettingsModal.svelte';
 
 	import { state } from '$lib/stores.js';
 
@@ -14,6 +15,8 @@
 
 	let editorComp;
 	let titleComp;
+
+	let settingsOpen = false;
 
 	/* TODO: 
         [x] - Implement ability to erase content of editor 
@@ -116,26 +119,57 @@
 	}
 </script>
 
-
-<header>
-	<NavBar 
-	bind:titleComp
-	on:openEv={openFile}
-	on:saveEv={saveFile}
-	on:newEv={newFile}
-	on:renameEv={rename}/>
-</header>
 <article>
-	<MilkdownEditor on:markdownUpdate={markdownUpdated} bind:this={editorComp}  />
+	<SwitchingIcon icon1="gg:sidebar" icon2="gg:sidebar-open" height="24" />
+	<header>
+		<title-bar>
+			<TitleBar
+				bind:titleComp
+				on:openEv={openFile}
+				on:saveEv={saveFile}
+				on:newEv={newFile}
+				on:renameEv={rename}
+			/>
+		</title-bar>
+	</header>
+	<SwitchingIcon
+		icon1="fluent:settings-24-regular"
+		icon2="fluent:settings-24-filled"
+		height="24"
+		bind:switched={settingsOpen}
+		on:click={() => {
+			settingsOpen = !settingsOpen;
+		}}
+	/>
+	<body>
+		<MilkdownEditor on:markdownUpdate={markdownUpdated} bind:this={editorComp} />
+	</body>
 </article>
+
+<SettingsModal bind:showModal={settingsOpen} />
 
 <style lang="scss">
 	article {
-		width: 60%;
+		height: 100%;
+		display: grid;
+
+		grid-template-rows: auto 1fr;
+		grid-template-columns: auto 60% auto;
+	}
+
+	body {
+		width: 100%;
 		margin: 0 auto;
+
+		grid-column: 2;
+		grid-row: 2;
 	}
 
 	header {
 		width: 100%;
+
+		grid-row: 1;
+		grid-column: 2;
 	}
+
 </style>
