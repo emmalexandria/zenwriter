@@ -1,5 +1,8 @@
 <script>
     import Icon from "@iconify/svelte";
+	import SettingsSection from "./SettingsSection.svelte";
+	import SettingsToggle from "./SettingsToggle.svelte";
+	import SettingsDropdown from "./SettingsDropdown.svelte";
 
     export let showModal;
 
@@ -16,18 +19,23 @@
             <Icon icon="material-symbols:close" style="display:block; color:inherit;"/>
         </button>
     </top-bar>
-    <ul>
-        <li>Use your imagination to picture a list of settings here</li>
-        <li>It'd be really helpful if you did that</li>
-    </ul>
+    <SettingsToggle>System spellcheck</SettingsToggle>
+    <SettingsSection title="Theme">
+    <SettingsDropdown>Theme</SettingsDropdown>
+    <SettingsDropdown items={["Sync to system", "Light", "Dark"]}>Dark mode</SettingsDropdown>
+</SettingsSection>
+
+    
 </dialog>
 
 <style lang="scss">
     dialog {
         max-width: 60%;
+        min-width: 20%;
         border-radius: 8px;
 
         border:none;
+        background-color: var(--bg500);
         padding: 1rem;
     }
 
@@ -37,9 +45,9 @@
 
         align-items: center;
         justify-content: space-between;
-
         & h1 {
             margin: 0;
+            font-family: "EB Garamond";
         }
 
         & button {
