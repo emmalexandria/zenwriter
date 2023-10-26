@@ -23,8 +23,9 @@ fn main() {
             save_file,
             save_file_as,
             open_file,
+            open_file_prompt,
 			new_file,
-			confirm_unsaved_exit,
+			confirm_unsaved,
             get_md_files_from_dir
         ])
         .run(tauri::generate_context!())
@@ -111,10 +112,15 @@ async fn save_file_as(filename: String, contents: String) -> String {
 }
 
 #[tauri::command]
-async fn open_file() -> (String, String) {
-    let mut contents = String::new();
-    let mut file_path = String::new();
+async fn open_file(path: String) -> String {
+    match files::read_file(&path) {
+        Ok(c) => c,
+        Err(_) => String::from(""),
+    }
+}
 
+#[tauri::command] 
+async fn open_file_prompt() -> String {
     let path_buf = blocking::FileDialogBuilder::new()
         .add_filter(".md files", &["md"])
         .set_title("Open a Markdown file")
@@ -128,17 +134,10 @@ async fn open_file() -> (String, String) {
         None => None,
     };
 
-    file_path = match path {
+    match path {
         Some(s) => s,
         None => String::from(""),
-    };
-
-    contents = match files::read_file(&file_path) {
-        Ok(c) => c,
-        Err(_) => String::from(""),
-    };
-
-    return (file_path, contents);
+    }
 }
 
 #[tauri::command]
@@ -158,10 +157,10 @@ async fn new_file(saved: bool) -> bool {
 }
 
 #[tauri::command]
-async fn confirm_unsaved_exit() -> bool {
+async fn confirm_unsaved() -> bool {
 	show_confirm_box(
 		"zenwriter",
-		"You have unsaved changes. Are you sure you'd like to exit?",
+		"You have unsaved changes. This action will discard your changes.",
 		String::from("Confirm"),
 		String::from("Cancel"),
 	).await
