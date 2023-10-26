@@ -30,3 +30,21 @@ pub fn read_file(path: &str) -> std::io::Result<String> {
 pub fn file_exists(path: &String) -> bool {
     Path::new(path).exists()
 }
+
+//this function is terrible and unwraps all errors
+//ill replace it with something better later
+pub fn get_all_md_files(dir: &String) -> Vec<String> {
+    let mut ret_vec = Vec::<String>::new();
+
+    let paths = std::fs::read_dir(dir).unwrap();
+
+    for entry in paths {
+        let path = entry.unwrap().path();
+
+        if path.is_dir() && path.extension().unwrap() == "md" {
+            ret_vec.push(String::from(path.to_str().unwrap()))
+        }
+    }
+
+    return ret_vec;
+}
