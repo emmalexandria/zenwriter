@@ -7,15 +7,19 @@
     export let switched = false;
     
     export let height = "32px";
+
+    function toggle() {
+        switched=!switched;
+    }
 </script>
 
 <icon-container>
 {#if !switched}
-<button on:click out:fade={{delay: 0, duration: 50}} in:fade={{delay: 50, duration: 50}}>
+<button on:click={toggle} out:fade={{delay: 0, duration: 50}} in:fade={{delay: 50, duration: 50}}>
     <Icon icon={icon1} height={height} style="display: block"/>
 </button>
 {:else}
-<button on:click out:fade={{delay: 0, duration: 50}} in:fade={{delay: 50, duration: 50}}>
+<button on:click={toggle} out:fade={{delay: 0, duration: 50}} in:fade={{delay: 50, duration: 50}}>
     <Icon icon={icon2} height={height} style="display: block"/>
 </button>
 {/if}

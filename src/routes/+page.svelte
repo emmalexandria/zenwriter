@@ -2,6 +2,7 @@
 	import TitleBar from '$lib/TitleBar.svelte';
 	import MilkdownEditor from '$lib/MilkdownEditor.svelte';
 	import SettingsModal from '$lib/Settings/SettingsModal.svelte';
+	import Sidebar from '$lib/Sidebar.svelte';
 
 	import { state } from '$lib/stores.js';
 
@@ -17,6 +18,7 @@
 	let titleComp;
 
 	let settingsOpen = false;
+	let sidebarOpen = false;
 
 	/* TODO: 
         [x] - Implement ability to erase content of editor 
@@ -120,8 +122,11 @@
 </script>
 
 <article>
-	<SwitchingIcon icon1="gg:sidebar" icon2="gg:sidebar-open" height="24" />
+	<span class="left icon">
+	<SwitchingIcon icon1="gg:sidebar" icon2="gg:sidebar-open" height="24" bind:switched={sidebarOpen} />
+	</span>
 	<header>
+		
 		<title-bar>
 			<TitleBar
 				bind:titleComp
@@ -132,15 +137,10 @@
 			/>
 		</title-bar>
 	</header>
-	<SwitchingIcon
-		icon1="fluent:settings-24-regular"
-		icon2="fluent:settings-24-filled"
-		height="24"
-		bind:switched={settingsOpen}
-		on:click={() => {
-			settingsOpen = !settingsOpen;
-		}}
-	/>
+	<span class="right icon">
+	<SwitchingIcon icon1="fluent:settings-24-regular" icon2="fluent:settings-24-filled" height="24" bind:switched={settingsOpen}/>
+	</span>
+	<Sidebar visible={sidebarOpen}/>
 	<body>
 		<MilkdownEditor on:markdownUpdate={markdownUpdated} bind:this={editorComp} />
 	</body>
@@ -154,7 +154,7 @@
 		display: grid;
 
 		grid-template-rows: auto 1fr;
-		grid-template-columns: auto 60% auto;
+		grid-template-columns: 20% 60% 20%;
 	}
 
 	body {
@@ -171,5 +171,22 @@
 		grid-row: 1;
 		grid-column: 2;
 	}
+
+	.icon {
+		width: fit-content; 
+		height: min-content;
+
+		align-self: center;
+		margin-left: 12px;
+		margin-right: 12px;
+		
+		&.left {
+			justify-self: start;
+		}
+		&.right {
+			justify-self: end;
+		}
+	}
+
 
 </style>
