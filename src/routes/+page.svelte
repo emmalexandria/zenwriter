@@ -4,7 +4,7 @@
 	import SettingsModal from '$lib/Settings/SettingsModal.svelte';
 	import Sidebar from '$lib/Sidebar.svelte';
 
-	import { state } from '$lib/stores.js';
+	import { state, sidebar } from '$lib/stores.js';
 
 	import { invoke } from '@tauri-apps/api/tauri';
 	import { appWindow } from '@tauri-apps/api/window';
@@ -58,6 +58,12 @@
 
 		editorComp.setContent($state.contents);
 		titleComp.setTitle($state.filename);
+
+		if ($sidebar.currentDir == '') {
+			let baseDir = baseDirFromPath($state.path);
+			$sidebar.currentDir = baseDirFromPath(baseDir);
+			$sidebar.files = await invoke('get_md_files_from_dir', {dir: baseDir});
+		}
 	};
 
 	function saveFile() {
@@ -129,7 +135,7 @@
 		
 		<title-bar>
 			<TitleBar
-				bind:titleComp
+				bind:this={titleComp}
 				on:openEv={openFile}
 				on:saveEv={saveFile}
 				on:newEv={newFile}
@@ -154,7 +160,7 @@
 		display: grid;
 
 		grid-template-rows: auto 1fr;
-		grid-template-columns: 20% 60% 20%;
+		grid-template-columns: 3fr 4fr 3fr;
 	}
 
 	body {

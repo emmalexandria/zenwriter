@@ -8,3 +8,8 @@ export const state = writable({
 })
 
 export const focused = writable(false);
+
+export const sidebar = writable({
+    currentDir: "",
+    files: [],
+})

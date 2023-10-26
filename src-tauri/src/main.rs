@@ -24,7 +24,8 @@ fn main() {
             save_file_as,
             open_file,
 			new_file,
-			confirm_unsaved_exit
+			confirm_unsaved_exit,
+            get_md_files_from_dir
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
@@ -164,6 +165,11 @@ async fn confirm_unsaved_exit() -> bool {
 		String::from("Confirm"),
 		String::from("Cancel"),
 	).await
+}
+
+#[tauri::command] 
+fn get_md_files_from_dir(dir: String) -> Vec<String> {
+    files::get_files_with_ext(&dir, "md")
 }
 
 
