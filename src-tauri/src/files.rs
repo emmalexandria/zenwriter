@@ -1,4 +1,4 @@
-use std::{fs::{File, OpenOptions}, io::{Write, Read}, path::Path};
+use std::{fs::{File, OpenOptions, ReadDir}, io::{Write, Read}, path::Path};
 
 pub fn write_file(path: &str, content: &str) -> std::io::Result<()> {
     let file = File::create(path);
@@ -31,18 +31,31 @@ pub fn file_exists(path: &String) -> bool {
     Path::new(path).exists()
 }
 
-//this function is terrible and unwraps all errors
-//ill replace it with something better later
 pub fn get_files_with_ext(dir: &String, ext: &str) -> Vec<String> {
     let mut ret_vec = Vec::<String>::new();
 
-    let paths = std::fs::read_dir(dir).unwrap();
+    let path_result = std::fs::read_dir(dir);
+
+    let paths: ReadDir;
+    match path_result {
+        Ok(rd) => paths = rd, 
+        Err(e) => {
+            ret_vec.push(e.to_string());
+            return ret_vec;
+        }
+    }
 
     for entry in paths {
-        let path = entry.unwrap().path();
-
-        if !path.is_dir() && path.extension().unwrap() == ext {
-            ret_vec.push(String::from(path.to_str().unwrap()))
+        match entry {
+            Ok(e) => {
+                let path = e.path();
+                if !path.is_dir() && path.extension().unwrap() == ext {
+                    ret_vec.push(String::from(path.to_str().unwrap()))
+                }
+            }
+            Err(e) => {
+                ret_vec.push(e.to_string())
+            }
         }
     }
 
