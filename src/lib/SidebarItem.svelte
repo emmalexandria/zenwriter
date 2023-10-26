@@ -19,7 +19,6 @@
         border-radius: 4px;
         margin: unset;
 
-        margin: 4px 0 4px 0;
         font-family: "Open Sans";
         font-size: 12px;
 

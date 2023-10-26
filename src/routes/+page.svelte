@@ -186,7 +186,7 @@
 
 <style lang="scss">
 	article {
-		height: 100%;
+		min-height: 50%;
 		height: fit-content;
 		display: grid;
 

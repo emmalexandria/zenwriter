@@ -63,7 +63,6 @@
 		font-size: 12px;
         font-weight: bold;
 		margin: 0;
-        margin-bottom: 8px;
 	}
 
     ul {
@@ -73,5 +72,6 @@
 
     li {
         list-style-type: none;
+        margin-top: 8px;
     }
 </style>
