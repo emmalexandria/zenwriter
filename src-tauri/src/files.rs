@@ -49,8 +49,20 @@ pub fn get_files_with_ext(dir: &String, ext: &str) -> Vec<String> {
         match entry {
             Ok(e) => {
                 let path = e.path();
-                if !path.is_dir() && path.extension().unwrap() == ext {
-                    ret_vec.push(String::from(path.to_str().unwrap()))
+                let extension = match path.extension() {
+                    Some(ext) => { 
+                        match ext.to_str() {
+                            Some(s) => s,
+                            None => "",
+                        }
+                    },
+                    None => ""
+                };
+                if !path.is_dir() && extension == ext {
+                    match path.to_str() {
+                        Some(s) => ret_vec.push(String::from(s)),
+                        None => continue,
+                    }
                 }
             }
             Err(e) => {
