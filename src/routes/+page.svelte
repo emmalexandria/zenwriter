@@ -60,12 +60,12 @@
 				return
 			}
 		}
-		console.log(path)
+
 		if(path == '') {
 			path = await invoke('open_file_prompt');		
 		}
 
-		const content = await invoke('open_file', {path: path});;
+		const content = await invoke('open_file', {path: path});
 
 		if (path == '') return;
 		$state.path = path;
@@ -191,7 +191,7 @@
 		display: grid;
 
 		grid-template-rows: auto 1fr;
-		grid-template-columns: 3fr 4fr 3fr;
+		grid-template-columns: 25% 50% 25%;
 	}
 
 	body {

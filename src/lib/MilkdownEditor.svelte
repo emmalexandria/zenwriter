@@ -128,6 +128,8 @@
 
 		border-radius: 6px 6px 0px 0px;
 		max-width: 100%;
+
+		overflow-x: wrap;
 		min-height: 50%;
 		margin: 0 auto;
 	}
