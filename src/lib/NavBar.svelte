@@ -1,7 +1,7 @@
 <script>
 	import TitleBar from '$lib/TitleBar.svelte';
 	import SwitchingIcon from '$lib/SwitchingIcon.svelte';
-	import SettingsModal from './SettingsModal.svelte';
+	import SettingsModal from '$lib/settings/SettingsModal.svelte';
 
 	export let titleComp;
 
@@ -11,11 +11,11 @@
 
 <div>
 	<span class="icon">
-		<SwitchingIcon icon1="gg:sidebar" icon2="gg:sidebar-open" />
+		<SwitchingIcon icon1="gg:sidebar" icon2="gg:sidebar-open" height=24 />
 	</span>
 	<TitleBar bind:this={titleComp} on:openEv on:saveEv on:newEv on:renameEv />
 	<span class="icon">
-		<SwitchingIcon icon1="fluent:settings-24-regular" icon2="fluent:settings-24-filled" bind:switched={settingsOpen} on:click={() => {settingsOpen = !settingsOpen}}/>
+		<SwitchingIcon icon1="fluent:settings-24-regular" icon2="fluent:settings-24-filled" height=24 bind:switched={settingsOpen} on:click={() => {settingsOpen = !settingsOpen}}/>
 	</span>
 </div>
 
