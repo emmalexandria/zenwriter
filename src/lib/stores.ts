@@ -3,8 +3,6 @@ import { writable } from "svelte/store";
 import type {IFile} from "$lib/files"
 
 export interface IEditorState {
-    filename: string,
-    path: string,
     contents: string,
     saved: boolean,
     focused: boolean,
@@ -14,8 +12,6 @@ export interface IEditorState {
 }
 
 export const state = writable<IEditorState>({
-    filename: "",
-    path: "",
     contents: "",
     saved: true,
     focused: false,
@@ -28,14 +24,13 @@ export const state = writable<IEditorState>({
     }
 })
 
-export const focused = writable(false);
 
-interface ISidebar {
+interface ISidebarState {
     currentDir: string,
     files: Array<string>,
 }
 
-export const sidebar = writable<ISidebar>({
+export const sidebar = writable<ISidebarState>({
     currentDir: "",
     files: [],
 })

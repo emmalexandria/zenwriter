@@ -1,6 +1,6 @@
 import { invoke } from "@tauri-apps/api"
 
-import type {IEditorState} from "$lib/stores"
+import type { IEditorState } from "$lib/stores"
 
 export interface IFile {
     filename: string,
@@ -8,43 +8,46 @@ export interface IFile {
     fullpath: string,
 }
 
-export async function renameFile(file: IFile, renameTo: string) {
-    let fullpath = `${file.fullpath}/${renameTo}.md`
+export async function renameFile(file: IFile) {
+    let fullpath = `${file.fullpath}/${file.filename}.md`
 
-    await invoke('rename_file', {oldPath: file.fullpath, newPath: fullpath}).then((success: any) => {
+    await invoke('rename_file', { oldPath: file.fullpath, newPath: fullpath }).then((success: any) => {
         if (success) {
             file.fullpath = fullpath;
-            file.filename = renameTo;
+        }
+        else {
+            //this is a little dumb but it works
+            file.filename = nameFromPath(file.fullpath)
         }
     })
 };
 
 
 export async function newFile(state: IEditorState) {
-    if(!state.saved) {
+    if (!state.saved) {
         let confirm: boolean = await invoke("confirm_unsaved");
-
-        if(confirm) {
-            state.editorComp.setContent('');
-            state.file = {
-                filename: 'Untitled',
-                basedir: '',
-                fullpath: ''
-            }
-            state.contents = '';
-            state.saved = true;
-
-            state.titleComp.setTitle(state.file.filename)
-        }
+        if (!confirm) return;
     }
+
+    state.editorComp.setContent('');
+    state.file = {
+        filename: 'Untitled',
+        basedir: '',
+        fullpath: ''
+    }
+    state.contents = '';
+    state.saved = true;
+
+    state.titleComp.setTitle(state.file.filename)
+    state.editorComp.focus();
 }
 
 export async function saveFile(state: IEditorState) {
-    if (state.path === '') {
-        let path: string = await invoke('save_file_as', {filename: state.file.filename, contents: state.contents});
+    if (state.file.fullpath === '') {
+        let path: string = await invoke('save_file_as', { filename: state.file.filename, contents: state.contents });
 
         //File was not saved
-        if(path == '') return;
+        if (path == '') return;
 
         state.file = {
             filename: nameFromPath(path),
@@ -55,9 +58,9 @@ export async function saveFile(state: IEditorState) {
         state.titleComp.setTitle(state.file.filename)
     }
     else {
-        let path: string = await invoke('save_file', {path: state.file.fullpath, contents: state.contents});
+        let path: string = await invoke('save_file', { path: state.file.fullpath, contents: state.contents });
 
-        if(path == '') {
+        if (path == '') {
             console.error(`Saving file ${state.file.fullpath} was unsuccessful!`);
             return
         }
@@ -69,20 +72,17 @@ export async function saveFile(state: IEditorState) {
 }
 
 export async function openFile(state: IEditorState) {
-    if(!state.saved) {
+    if (!state.saved) {
         let conf: boolean = await invoke('confirm_unsaved');
-        if(!conf) {
+        if (!conf) {
             return;
         }
     }
 
-    let newPath = state.file.fullpath;
-    if(state.file.fullpath == '') {
-        newPath = await invoke('open_file_prompt');
-    }
+    let newPath: string = await invoke('open_file_prompt');
     if (newPath == '') return;
 
-    let newContent: string = await invoke('open_file', {path: newPath});
+    let newContent: string = await invoke('open_file', { path: newPath });
     if (newContent == '') return;
 
     state.file = {
@@ -102,9 +102,9 @@ export async function openFile(state: IEditorState) {
 function nameFromPath(path: string) {
     let pathStandardised = path.replace(/\\/g, '/');
 
-        
+
     let fileNameExt = pathStandardised.substring(pathStandardised.lastIndexOf('/'));
-    let fileName = fileNameExt.substring(0,fileNameExt.lastIndexOf("."));
+    let fileName = fileNameExt.substring(1, fileNameExt.lastIndexOf("."));
     return fileName;
 }
 

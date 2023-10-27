@@ -13,13 +13,13 @@
 	const dispatch = createEventDispatcher();
 
 	onMount(() => {
-		editableTitle = $state.filename;
+		editableTitle = $state.file.filename;
 	});
 
 	function titleKeypress(ev: KeyboardEvent) {
 		if (ev.key == 'Enter') {
 			ev.preventDefault();
-			$state.filename = editableTitle;
+			$state.file.filename = editableTitle;
 			$state.editorComp.focus();
 			renameEv();
 		}
@@ -52,7 +52,7 @@
 	function focusOut() {
 		titleFocused = false;
 
-		editableTitle = $state.filename;
+		editableTitle = $state.file.filename;
 	}
 
 	export const setTitle = (title: string) => {

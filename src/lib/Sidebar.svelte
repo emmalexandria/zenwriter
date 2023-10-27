@@ -28,7 +28,7 @@
 	<ul>
 		{#each $sidebar.files as file}
 			<li>
-				<SidebarItem {file} selected={nameFromPath(file)==nameFromPath($state.path)} on:click={() => fileClicked(file)}/>
+				<SidebarItem {file} selected={nameFromPath(file)==nameFromPath($state.file.fullpath)} on:click={() => fileClicked(file)}/>
 			</li>
 		{/each}
 	</ul>

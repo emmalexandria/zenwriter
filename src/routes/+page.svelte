@@ -10,33 +10,18 @@
 	import { appWindow } from '@tauri-apps/api/window';
 
 	import { nameFromPath, baseDirFromPath } from '$lib/utils.js';
+	import {newFile, openFile, saveFile, renameFile} from "$lib/files"
 	import { SvelteComponent, onMount } from 'svelte';
 	import Icon from '@iconify/svelte';
 	import SwitchingIcon from '../lib/SwitchingIcon.svelte';
 
-	let titleComp: SvelteComponent;
 
 	let settingsOpen = false;
 	let sidebarOpen = false;
 
-	/* TODO: 
-        [x] - Implement ability to erase content of editor 
-        [x] - Implement renaming
-        [x] - Cover case that what you want to rename file to is already existing
-        [x] - Implement 'file rename' event on TopBar so that user intent is retained 
-    
-    */
 
 	onMount(() => {
-		$state.filename = 'Untitled';
-		$state.saved = true;
-		$state.path = '';
-		$state.contents = '';
-		
-		if($state.editorComp != undefined) {
-			$state.editorComp.focus();
-		}
-		
+		newFile($state);
 	});
 
 	appWindow.onCloseRequested(async (event) => {
@@ -54,97 +39,21 @@
 	};
 
 	const openFileEv = () => {
-		openFile('');
+		openFile($state);
 	};
 
-	const openFile = async (path: string) => {
-		if ($state.saved == false) {
-			if ((await warnUnsaved()) == false) {
-				return;
-			}
-		}
-
-		if (path == '') {
-			path = await invoke('open_file_prompt');
-		}
-
-		const content: string = await invoke('open_file', { path: path });
-
-		if (path == '') return;
-		$state.path = path;
-		$state.filename = nameFromPath(path);
-		$state.contents = content;
-		$state.saved = true;
-
-		if($state.editorComp != undefined) {
-			$state.editorComp.setContent($state.contents);
-			$state.editorComp.focus()
-		}
-		
-		titleComp.setTitle($state.filename);
-
-		let baseDir = baseDirFromPath($state.path);
-
-		if ($sidebar.currentDir != baseDir) {
-			$sidebar.currentDir = baseDir;
-			$sidebar.files = await invoke('get_md_files_from_dir', { dir: baseDir });
-		}
-
+	const saveFileEv = () => {
+		saveFile($state);
 	};
 
-	function saveFile() {
-		if ($state.path === undefined || $state.path === '') {
-			saveAs();
-		} else {
-			saveWithState();
-		}
-
-		$state.editorComp.focus();
-	}
-
-	const saveWithState = async () => {
-		let str = await invoke('save_file', { path: $state.path, contents: $state.contents });
-		if (str == '') return;
-		$state.saved = true;
+	const newFileEv = () => {
+		newFile($state);
 	};
 
-	const saveAs = async () => {
-		let path: string = await invoke('save_file_as', {
-			filename: $state.filename,
-			contents: $state.contents
-		});
-
-		if (path == '') return;
-		$state.path = path;
-		$state.filename = nameFromPath(path);
-		$state.saved = true;
-		titleComp.setTitle($state.filename);
+	const renameFileEv = () => {
+		renameFile($state.file)
 	};
 
-	const newFile = async () => {
-		if (await invoke('new_file', { saved: $state.saved })) {
-			$state.editorComp.setContent('');
-			$state.path = '';
-			$state.filename = 'Untitled';
-			$state.contents = '';
-			$state.saved = true;
-
-			titleComp.setTitle($state.filename);
-		}
-	};
-
-	const rename = async () => {
-		if ($state.path == '' || $state.path == undefined) return;
-		let newPath = baseDirFromPath($state.path) + `/${$state.filename}.md`;
-
-		await invoke('rename_file', { oldPath: $state.path, newPath: newPath }).then((success) => {
-			if (success) {
-				$state.path = newPath;
-			} else {
-				$state.filename = nameFromPath($state.path);
-			}
-		});
-	};
 
 	function markdownUpdated(ev: any) {
 		if (ev.detail.new != $state.contents) {
@@ -160,21 +69,12 @@
 			return;
 		}
 
-		if (nameFromPath(file) == nameFromPath($state.path)) {
+		if (nameFromPath(file) == nameFromPath($state.file.fullpath)) {
 			return;
 		}
 
 		openFile(file);
 	}
-
-	function changeFocusMode(mode: boolean) {
-		if($state.editorComp != undefined) {
-			$state.editorComp.focus();
-		}
-	}
-
-	$: changeFocusMode($state.focused)
-
 </script>
 
 <article class:focused={$state.focused}>
@@ -189,11 +89,11 @@
 	<header>
 		<title-bar>
 			<TitleBar
-				bind:this={titleComp}
+				bind:this={$state.titleComp}
 				on:openEv={openFileEv}
-				on:saveEv={saveFile}
-				on:newEv={newFile}
-				on:renameEv={rename}
+				on:saveEv={saveFileEv}
+				on:newEv={newFileEv}
+				on:renameEv={renameFileEv}
 			/>
 		</title-bar>
 	</header>
