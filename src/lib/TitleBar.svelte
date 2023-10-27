@@ -2,7 +2,7 @@
 	import { createEventDispatcher } from 'svelte';
 
 
-	import { state } from '$lib/stores';
+	import { state, settings } from '$lib/stores';
 	import { onMount } from 'svelte';
 
 	import {fade} from 'svelte/transition'
@@ -66,12 +66,12 @@
 			on:focusin={focusIn}
 			on:focusout={focusOut}
 			on:keydown={titleKeypress}
+			spellcheck={$settings.spellcheck}
 		>
 			{editableTitle}
 		</p>
 
 		<span class="filesaved">{$state.saved ? '' : '*'}</span>
-
 		<end-items>
 			<button on:click={newEv}>new</button>
 			<button on:click={openEv}>open</button>

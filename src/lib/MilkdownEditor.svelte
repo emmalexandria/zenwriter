@@ -29,7 +29,7 @@
 
 	import 'prism-themes/themes/prism-material-light.css';
 
-	import {focused} from "$lib/stores"
+	import {settings} from "$lib/stores"
 
 	const dispatch = createEventDispatcher();
 
@@ -114,7 +114,7 @@
 	};
 </script>
 
-<div class="editorDiv" use:editor/>
+<div class="editorDiv" use:editor spellcheck={$settings.spellcheck}/>
 <div class="wordcount">
 	<p>{countWords(currentText)} words</p>
 </div>

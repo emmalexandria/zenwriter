@@ -13,3 +13,7 @@ export const sidebar = writable({
     currentDir: "",
     files: [],
 })
+
+export const settings = writable({
+    spellcheck: true,
+})

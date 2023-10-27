@@ -4,11 +4,15 @@
 	import SettingsToggle from "./SettingsToggle.svelte";
 	import SettingsDropdown from "./SettingsDropdown.svelte";
 
+    import {settings} from "$lib/stores"
+
     export let showModal;
 
     let dialog;
 
     $: if (dialog && showModal) dialog.showModal();
+
+    $: console.log($settings.spellcheck)
 
 </script>
 
@@ -19,7 +23,7 @@
             <Icon icon="material-symbols:close" style="display:block; color:inherit;"/>
         </button>
     </top-bar>
-    <SettingsToggle>System spellcheck</SettingsToggle>
+    <SettingsToggle bind:toggled={$settings.spellcheck}>System spellcheck</SettingsToggle>
     <SettingsSection title="Theme">
     <SettingsDropdown>Theme</SettingsDropdown>
     <SettingsDropdown items={["Sync to system", "Light", "Dark"]}>Dark mode</SettingsDropdown>

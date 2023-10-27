@@ -1,14 +1,13 @@
 <script>
-    export let bindVar;
-
+    export let toggled;
 
 </script>
 
 <label class="toggle">
     <slot/>
-    <input type="checkbox">
+    <input type="checkbox" bind:checked={toggled}>
     <span class="slider"></span>
-  </label>
+</label>
 
 <style>
     label {
