@@ -46,26 +46,25 @@
 	});
 
 	const warnUnsaved = async () => {
-		return invoke('confirm_unsaved')
-	}
+		return invoke('confirm_unsaved');
+	};
 
 	const openFileEv = () => {
-		openFile('')
-	}
+		openFile('');
+	};
 
 	const openFile = async (path) => {
-
-		if($state.saved == false) {
-			if (await warnUnsaved() == false) {
-				return
+		if ($state.saved == false) {
+			if ((await warnUnsaved()) == false) {
+				return;
 			}
 		}
 
-		if(path == '') {
-			path = await invoke('open_file_prompt');		
+		if (path == '') {
+			path = await invoke('open_file_prompt');
 		}
 
-		const content = await invoke('open_file', {path: path});
+		const content = await invoke('open_file', { path: path });
 
 		if (path == '') return;
 		$state.path = path;
@@ -76,11 +75,11 @@
 		editorComp.setContent($state.contents);
 		titleComp.setTitle($state.filename);
 
-		let baseDir = baseDirFromPath($state.path)
+		let baseDir = baseDirFromPath($state.path);
 
 		if ($sidebar.currentDir != baseDir) {
 			$sidebar.currentDir = baseDir;
-			$sidebar.files = await invoke('get_md_files_from_dir', {dir: baseDir});
+			$sidebar.files = await invoke('get_md_files_from_dir', { dir: baseDir });
 		}
 	};
 
@@ -146,11 +145,11 @@
 
 	function sidebarClick(ev) {
 		let file = ev.detail.file;
-		if(file == undefined || file == '') {
+		if (file == undefined || file == '') {
 			return;
-		} 
+		}
 
-		if(nameFromPath(file) == nameFromPath($state.path)) {
+		if (nameFromPath(file) == nameFromPath($state.path)) {
 			return;
 		}
 
@@ -158,10 +157,15 @@
 	}
 </script>
 
-<article>
-	<span class="left icon">
-	<SwitchingIcon icon1="gg:sidebar" icon2="gg:sidebar-open" height="24" bind:switched={sidebarOpen} />
-	</span>
+<article class:focused={$state.focused}>
+	<sidebar-icon class="icon">
+		<SwitchingIcon
+			icon1="gg:sidebar"
+			icon2="gg:sidebar-open"
+			height="24"
+			bind:switched={sidebarOpen}
+		/>
+	</sidebar-icon>
 	<header>
 		<title-bar>
 			<TitleBar
@@ -173,10 +177,25 @@
 			/>
 		</title-bar>
 	</header>
-	<span class="right icon">
-	<SwitchingIcon icon1="fluent:settings-24-regular" icon2="fluent:settings-24-filled" height="24" bind:switched={settingsOpen}/>
-	</span>
-	<Sidebar visible={sidebarOpen} on:fileClicked={sidebarClick}/>
+	<right-icon-group class="icon">
+		<span class="inner-icon">
+			<SwitchingIcon
+				icon1="ri:focus-2-line"
+				icon2="ri:focus-2-fill"
+				height="24"
+				bind:switched={$state.focused}
+			/>
+		</span>
+		<SwitchingIcon
+			icon1="fluent:settings-24-regular"
+			icon2="fluent:settings-24-filled"
+			height="24"
+			bind:switched={settingsOpen}
+		/>
+	</right-icon-group>
+	<side-bar>
+		<Sidebar visible={sidebarOpen} on:fileClicked={sidebarClick} />
+	</side-bar>
 	<body>
 		<MilkdownEditor on:markdownUpdate={markdownUpdated} bind:this={editorComp} />
 	</body>
@@ -192,38 +211,70 @@
 
 		grid-template-rows: auto 1fr;
 		grid-template-columns: 25% 50% 25%;
+
+		& body {
+			width: 100%;
+			margin: 0 auto;
+
+			grid-column: 2;
+			grid-row: 2;
+		}
+
+		& header {
+			width: 100%;
+
+			grid-row: 1;
+			grid-column: 2;
+		}
+
 	}
 
-	body {
-		width: 100%;
-		margin: 0 auto;
+	article.focused {
+		& body {
+			margin-top: 1rem;
+			grid-column-start: 1;
+			grid-column-end: 4;
+			grid-row-start: 1;
+			grid-row-end: 3;
 
-		grid-column: 2;
-		grid-row: 2;
-	}
+			height: 100%;
+			width: 80%;
+		}
 
-	header {
-		width: 100%;
+		& header {
+			display: none;
+		}
 
-		grid-row: 1;
-		grid-column: 2;
+		& .icon {
+			display: none;
+		}
+
+		
+		& side-bar {
+			display: none;
+		}
 	}
 
 	.icon {
-		width: fit-content; 
+		width: fit-content;
 		height: min-content;
 
 		align-self: center;
 		margin-left: 12px;
 		margin-right: 12px;
-		
-		&.left {
-			justify-self: start;
-		}
-		&.right {
-			justify-self: end;
-		}
 	}
 
+	sidebar-icon {
+		justify-self: start;
+	}
 
+	right-icon-group {
+		display: flex;
+		flex-direction: row;
+		justify-self: right;
+	}
+
+	span.inner-icon {
+		margin-right: 12px;
+	}
 </style>

@@ -29,7 +29,7 @@
 
 	import 'prism-themes/themes/prism-material-light.css';
 
-	import {settings} from "$lib/stores"
+	import {settings, state} from "$lib/stores"
 
 	const dispatch = createEventDispatcher();
 
@@ -112,12 +112,21 @@
 			currentText = div.innerText;
 		});
 	};
+
+	function editorKeydownHandler(ev) {
+		if($state.focused && ev.key == "Escape") {
+			$state.focused = false;
+		}
+	}
 </script>
 
-<div class="editorDiv" use:editor spellcheck={$settings.spellcheck}/>
-<div class="wordcount">
-	<p>{countWords(currentText)} words</p>
-</div>
+<div class="editorDiv" use:editor spellcheck={$settings.spellcheck} on:keydown={editorKeydownHandler}/>
+<bottom-bar>
+	{#if $state.focused}
+		<p class="focusmsg">Press escape to exit focus mode</p>
+	{/if}
+	<p class="wordcount">{countWords(currentText)} words</p>
+</bottom-bar>
 
 <style lang="scss">
 	div.editorDiv {
@@ -134,18 +143,37 @@
 		margin: 0 auto;
 	}
 
-	div.wordcount {
+
+	bottom-bar {
+		display: flex;
+		flex-direction: row;
+
+		padding: 12px;
 		background-color: var(--w500);
 
 		border-radius: 0px 0px 6px 6px;
 
 		& p {
 			width: max-content;
-			padding: 1rem;
-			margin-left: auto;
 
 			font-family: 'EB Garamond';
 			font-size: 12px;
+
+			margin: 0;
+			
+		}
+
+		& .wordcount {
+			font-style: italic;
+			opacity: 0.8;
+			margin-left: auto;
+
+		}
+
+		& .focusmsg {
+
+			font-size: 14px;
+			font-family: 'Open Sans';
 			font-style: italic;
 			opacity: 0.8;
 		}

@@ -23,6 +23,9 @@
 			document.activeElement.blur();
 			renameEv();
 		}
+		if (ev.key == 'Escape') {
+			document.activeElement.blur();
+		}
 	}
 
 	function openEv() {
@@ -56,7 +59,7 @@
 	};
 </script>
 
-<div class="outer" out:fade={{delay:0, duration: 50}}>
+<div class="outer" class:invisible={$state.focused} out:fade={{delay:0, duration: 50}}>
 	<div class="container">
 		<p
 			class="title"
@@ -100,7 +103,7 @@
 		margin: 0;
 		padding: 1rem;
 	}
-
+	
 	end-items {
 		font-size: 16px;
 		display: flex;

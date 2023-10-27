@@ -5,6 +5,7 @@ export const state = writable({
     path: "",
     contents: "",
     saved: true,
+    focused: false,
 })
 
 export const focused = writable(false);
