@@ -1,8 +1,9 @@
 <script lang="ts">
 	export let visible: boolean;
 
-	import { sidebar, state } from '$lib/stores';
+	import { sidebar, state, type IEditorState } from '$lib/stores';
 	import { nameFromPath } from '$lib/utils';
+	import { invoke } from '@tauri-apps/api';
 	import SidebarItem from './SidebarItem.svelte';
 
     import {createEventDispatcher} from 'svelte';
@@ -15,12 +16,18 @@
         });
     }
 
+	$: updateSidebar($state)
+
+	async function updateSidebar(state: IEditorState) {
+		$sidebar.files = await invoke('get_md_files_from_dir', {dir: state.file.basedir})
+	}
+
 </script>
 
 <div class:visible>
 	<p>
-		{#if $sidebar.currentDir != ''}
-			{$sidebar.currentDir}
+		{#if $state.file.basedir != ''}
+			{$state.file.basedir}
 		{:else}
 			No dir open
 		{/if}
@@ -28,7 +35,7 @@
 	<ul>
 		{#each $sidebar.files as file}
 			<li>
-				<SidebarItem {file} selected={nameFromPath(file)==nameFromPath($state.file.fullpath)} on:click={() => fileClicked(file)}/>
+				<SidebarItem {file} selected={nameFromPath(file)==$state.file.filename} on:click={() => fileClicked(file)}/>
 			</li>
 		{/each}
 	</ul>

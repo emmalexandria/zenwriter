@@ -26,15 +26,17 @@ export const state = writable<IEditorState>({
 
 
 interface ISidebarState {
-    currentDir: string,
     files: Array<string>,
 }
 
 export const sidebar = writable<ISidebarState>({
-    currentDir: "",
     files: [],
 })
 
-export const settings = writable({
+interface ISettings {
+    spellcheck: boolean
+}
+
+export const settings = writable<ISettings>({
     spellcheck: true,
 })

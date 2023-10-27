@@ -83,19 +83,41 @@ export async function openFile(state: IEditorState) {
     if (newPath == '') return;
 
     let newContent: string = await invoke('open_file', { path: newPath });
-    if (newContent == '') return;
 
     state.file = {
         filename: nameFromPath(newPath),
         basedir: baseDirFromPath(newPath),
         fullpath: newPath
     }
-    state.saved = true;
     state.contents = newContent;
     state.editorComp.setContent(state.contents);
     state.titleComp.setTitle(state.file.filename)
 
+    state.saved = true;
+
     //TODO: Implement sidebar refreshing
+}
+
+export async function openFileWithPath(state: IEditorState, path: string) {
+    if (!state.saved) {
+        let conf: boolean = await invoke('confirm_unsaved');
+        if (!conf) {
+            return;
+        }
+    }
+
+    let newContent: string = await invoke('open_file', { path: path });
+    if (newContent == '') return;
+
+    state.file = {
+        filename: nameFromPath(path),
+        basedir: baseDirFromPath(path),
+        fullpath: path
+    }
+    state.saved = true;
+    state.contents = newContent;
+    state.editorComp.setContent(state.contents);
+    state.titleComp.setTitle(state.file.filename)
 }
 
 

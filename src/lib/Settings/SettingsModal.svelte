@@ -12,7 +12,6 @@
 
     $: if (dialog && showModal) dialog.showModal();
 
-    $: console.log($settings.spellcheck)
 
 </script>
 

@@ -9,10 +9,9 @@
 	import { invoke } from '@tauri-apps/api/tauri';
 	import { appWindow } from '@tauri-apps/api/window';
 
-	import { nameFromPath, baseDirFromPath } from '$lib/utils.js';
-	import {newFile, openFile, saveFile, renameFile} from "$lib/files"
-	import { SvelteComponent, onMount } from 'svelte';
-	import Icon from '@iconify/svelte';
+	import { nameFromPath } from '$lib/utils.js';
+	import {newFile, openFile, saveFile, renameFile, openFileWithPath} from "$lib/files"
+	import { onMount } from 'svelte';
 	import SwitchingIcon from '../lib/SwitchingIcon.svelte';
 
 
@@ -69,11 +68,11 @@
 			return;
 		}
 
-		if (nameFromPath(file) == nameFromPath($state.file.fullpath)) {
+		if (nameFromPath(file) == $state.file.filename) {
 			return;
 		}
 
-		openFile(file);
+		openFileWithPath($state, file);
 	}
 </script>
 
