@@ -1,13 +1,16 @@
 import { SvelteComponent } from "svelte";
 import { writable } from "svelte/store";
+import type {IFile} from "$lib/files"
 
-interface IEditorState {
+export interface IEditorState {
     filename: string,
     path: string,
     contents: string,
     saved: boolean,
     focused: boolean,
-    editorComp: any
+    editorComp: any,
+    titleComp: any,
+    file: IFile
 }
 
 export const state = writable<IEditorState>({
@@ -16,7 +19,13 @@ export const state = writable<IEditorState>({
     contents: "",
     saved: true,
     focused: false,
-    editorComp: null
+    editorComp: null,
+    titleComp: null,
+    file: {
+        filename: "",
+        basedir: "",
+        fullpath: ""
+    }
 })
 
 export const focused = writable(false);
