@@ -20,11 +20,12 @@
 		if (ev.key == 'Enter') {
 			ev.preventDefault();
 			$state.filename = editableTitle;
-			document.activeElement.blur();
+			$state.editorComp.focus();
 			renameEv();
 		}
 		if (ev.key == 'Escape') {
-			document.activeElement.blur();
+
+			$state.editorComp.focus();
 		}
 	}
 
@@ -103,7 +104,7 @@
 		margin: 0;
 		padding: 1rem;
 	}
-	
+
 	end-items {
 		font-size: 16px;
 		display: flex;

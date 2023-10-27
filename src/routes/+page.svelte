@@ -14,7 +14,6 @@
 	import Icon from '@iconify/svelte';
 	import SwitchingIcon from '../lib/SwitchingIcon.svelte';
 
-	let editorComp;
 	let titleComp;
 
 	let settingsOpen = false;
@@ -33,6 +32,8 @@
 		$state.saved = true;
 		$state.path = '';
 		$state.content = '';
+
+		$state.editorComp.focus();
 	});
 
 	appWindow.onCloseRequested(async (event) => {
@@ -72,7 +73,7 @@
 		$state.contents = content;
 		$state.saved = true;
 
-		editorComp.setContent($state.contents);
+		$state.editorComp.setContent($state.contents);
 		titleComp.setTitle($state.filename);
 
 		let baseDir = baseDirFromPath($state.path);
@@ -81,6 +82,8 @@
 			$sidebar.currentDir = baseDir;
 			$sidebar.files = await invoke('get_md_files_from_dir', { dir: baseDir });
 		}
+
+		$state.editorComp.focus()
 	};
 
 	function saveFile() {
@@ -89,6 +92,8 @@
 		} else {
 			saveWithState();
 		}
+
+		$state.editorComp.focus();
 	}
 
 	const saveWithState = async () => {
@@ -112,7 +117,7 @@
 
 	const newFile = async () => {
 		if (await invoke('new_file', { saved: $state.saved })) {
-			editorComp.setContent('');
+			$state.editorComp.setContent('');
 			$state.path = '';
 			$state.filename = 'Untitled';
 			$state.contents = '';
@@ -155,6 +160,16 @@
 
 		openFile(file);
 	}
+
+	function changeFocusMode(mode) {
+		if($state.editorComp != undefined) {
+			$state.editorComp.focus();
+		}
+
+	}
+
+	$: changeFocusMode($state.focused)
+
 </script>
 
 <article class:focused={$state.focused}>
@@ -197,7 +212,7 @@
 		<Sidebar visible={sidebarOpen} on:fileClicked={sidebarClick} />
 	</side-bar>
 	<body>
-		<MilkdownEditor on:markdownUpdate={markdownUpdated} bind:this={editorComp} />
+		<MilkdownEditor on:markdownUpdate={markdownUpdated} bind:this={$state.editorComp}/>
 	</body>
 </article>
 

@@ -44,7 +44,6 @@
 				ctx.get(listenerCtx).markdownUpdated((ctx, markdown, prevMarkdown) => {
 					markdownUpdatedEvent(markdown, prevMarkdown);
 				});
-
 				ctx.set(prismConfig.key, {
 					configureRefractor: (refractor) => {
 						refractor.register(js);
@@ -93,6 +92,13 @@
 			if (!doc) return;
 			const state = view.state;
 			view.dispatch(state.tr.replace(0, state.doc.content.size, new Slice(doc.content, 0, 0)));
+		});
+	};
+
+	export const focus = async (content) => {
+		let res = await editorRef;
+		res.action((ctx) => {
+			ctx.get(editorViewCtx).focus();
 		});
 	};
 
