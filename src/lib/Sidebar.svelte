@@ -1,5 +1,5 @@
-<script>
-	export let visible;
+<script lang="ts">
+	export let visible: boolean;
 
 	import { sidebar, state } from '$lib/stores';
 	import { nameFromPath } from '$lib/utils';
@@ -9,7 +9,7 @@
 
     const dispatch = createEventDispatcher();
 
-    function fileClicked(filePath) {
+    function fileClicked(filePath: any) {
         dispatch('fileClicked', {
             file: filePath
         });
@@ -28,7 +28,7 @@
 	<ul>
 		{#each $sidebar.files as file}
 			<li>
-				<SidebarItem {file} selected={nameFromPath(file)==nameFromPath($state.path)} on:click={fileClicked(file)}/>
+				<SidebarItem {file} selected={nameFromPath(file)==nameFromPath($state.path)} on:click={() => fileClicked(file)}/>
 			</li>
 		{/each}
 	</ul>

@@ -1,6 +1,6 @@
-<script>
-    export let file;
-    export let selected;
+<script lang="ts">
+    export let file: String;
+    export let selected: boolean;
 
     import {nameFromPath} from '$lib/utils'
 

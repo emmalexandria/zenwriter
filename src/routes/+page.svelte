@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
 	import TitleBar from '$lib/TitleBar.svelte';
 	import MilkdownEditor from '$lib/MilkdownEditor.svelte';
-	import SettingsModal from '$lib/Settings/SettingsModal.svelte';
+	import SettingsModal from '$lib/settings/SettingsModal.svelte';
 	import Sidebar from '$lib/Sidebar.svelte';
 
 	import { state, sidebar } from '$lib/stores.js';
@@ -10,11 +10,11 @@
 	import { appWindow } from '@tauri-apps/api/window';
 
 	import { nameFromPath, baseDirFromPath } from '$lib/utils.js';
-	import { onMount } from 'svelte';
+	import { SvelteComponent, onMount } from 'svelte';
 	import Icon from '@iconify/svelte';
 	import SwitchingIcon from '../lib/SwitchingIcon.svelte';
 
-	let titleComp;
+	let titleComp: SvelteComponent;
 
 	let settingsOpen = false;
 	let sidebarOpen = false;
@@ -31,9 +31,12 @@
 		$state.filename = 'Untitled';
 		$state.saved = true;
 		$state.path = '';
-		$state.content = '';
-
-		$state.editorComp.focus();
+		$state.contents = '';
+		
+		if($state.editorComp != undefined) {
+			$state.editorComp.focus();
+		}
+		
 	});
 
 	appWindow.onCloseRequested(async (event) => {
@@ -54,7 +57,7 @@
 		openFile('');
 	};
 
-	const openFile = async (path) => {
+	const openFile = async (path: string) => {
 		if ($state.saved == false) {
 			if ((await warnUnsaved()) == false) {
 				return;
@@ -65,7 +68,7 @@
 			path = await invoke('open_file_prompt');
 		}
 
-		const content = await invoke('open_file', { path: path });
+		const content: string = await invoke('open_file', { path: path });
 
 		if (path == '') return;
 		$state.path = path;
@@ -73,7 +76,11 @@
 		$state.contents = content;
 		$state.saved = true;
 
-		$state.editorComp.setContent($state.contents);
+		if($state.editorComp != undefined) {
+			$state.editorComp.setContent($state.contents);
+			$state.editorComp.focus()
+		}
+		
 		titleComp.setTitle($state.filename);
 
 		let baseDir = baseDirFromPath($state.path);
@@ -83,7 +90,6 @@
 			$sidebar.files = await invoke('get_md_files_from_dir', { dir: baseDir });
 		}
 
-		$state.editorComp.focus()
 	};
 
 	function saveFile() {
@@ -103,7 +109,7 @@
 	};
 
 	const saveAs = async () => {
-		let path = await invoke('save_file_as', {
+		let path: string = await invoke('save_file_as', {
 			filename: $state.filename,
 			contents: $state.contents
 		});
@@ -140,7 +146,7 @@
 		});
 	};
 
-	function markdownUpdated(ev) {
+	function markdownUpdated(ev: any) {
 		if (ev.detail.new != $state.contents) {
 			$state.saved = false;
 		}
@@ -148,7 +154,7 @@
 		$state.contents = ev.detail.new;
 	}
 
-	function sidebarClick(ev) {
+	function sidebarClick(ev: any) {
 		let file = ev.detail.file;
 		if (file == undefined || file == '') {
 			return;
@@ -161,11 +167,10 @@
 		openFile(file);
 	}
 
-	function changeFocusMode(mode) {
+	function changeFocusMode(mode: boolean) {
 		if($state.editorComp != undefined) {
 			$state.editorComp.focus();
 		}
-
 	}
 
 	$: changeFocusMode($state.focused)

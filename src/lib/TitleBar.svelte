@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 
 
@@ -16,7 +16,7 @@
 		editableTitle = $state.filename;
 	});
 
-	function titleKeypress(ev) {
+	function titleKeypress(ev: KeyboardEvent) {
 		if (ev.key == 'Enter') {
 			ev.preventDefault();
 			$state.filename = editableTitle;
@@ -55,7 +55,7 @@
 		editableTitle = $state.filename;
 	}
 
-	export const setTitle = (title) => {
+	export const setTitle = (title: string) => {
 		editableTitle = title;
 	};
 </script>

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import {
 		Editor,
 		rootCtx,
@@ -33,16 +33,16 @@
 
 	const dispatch = createEventDispatcher();
 
-	let currentText;
+	let currentText: string;
 
-	let editorRef;
+	let editorRef: Promise<Editor>;
 
-	function editor(dom) {
+	function editor(dom: Node) {
 		editorRef = Editor.make()
 			.config((ctx) => {
 				ctx.set(rootCtx, dom);
 				ctx.get(listenerCtx).markdownUpdated((ctx, markdown, prevMarkdown) => {
-					markdownUpdatedEvent(markdown, prevMarkdown);
+					markdownUpdatedEvent(markdown, prevMarkdown == null ? "" : prevMarkdown);
 				});
 				ctx.set(prismConfig.key, {
 					configureRefractor: (refractor) => {
@@ -64,7 +64,7 @@
 			.create();
 	}
 
-	const markdownUpdatedEvent = async(current, previous) => {
+	const markdownUpdatedEvent = async(current: string, previous: string) => {
 		updateCurrentText();
 
 		dispatch('markdownUpdate', {
@@ -74,7 +74,7 @@
 	}
 	
 
-	function countWords(text) {
+	function countWords(text: string) {
 		if (text == undefined) return 0;
 		let count = text.split(' ').filter((n) => {
 			return n != '';
@@ -83,7 +83,7 @@
 		return count;
 	}
 
-	export const setContent = async (content) => {
+	export const setContent = async (content: string) => {
 		let res = await editorRef;
 		res.action((ctx) => {
 			const view = ctx.get(editorViewCtx);
@@ -95,7 +95,7 @@
 		});
 	};
 
-	export const focus = async (content) => {
+	export const focus = async () => {
 		let res = await editorRef;
 		res.action((ctx) => {
 			ctx.get(editorViewCtx).focus();
@@ -119,7 +119,7 @@
 		});
 	};
 
-	function editorKeydownHandler(ev) {
+	function editorKeydownHandler(ev: KeyboardEvent) {
 		if($state.focused && ev.key == "Escape") {
 			$state.focused = false;
 		}
