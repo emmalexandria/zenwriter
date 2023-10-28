@@ -11,14 +11,14 @@
 
 <style lang="scss">
     h2 {
-        font-family: "EB Garamond";
+        font-family: var(--header-font);
         margin:0;
     }
 
     hr {
         border: none;
-        border-top: 1px solid var(--g100);
-        color: var(--g100);
+        border-top: 1px solid var(--fg);
+        color: var(--fg);
         opacity: 0.8;
     }
 

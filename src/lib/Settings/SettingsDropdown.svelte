@@ -33,7 +33,7 @@
 
     div {
         width: 100%;
-        font-family: "Open Sans";
+        font-family: var(--body-font);
     }
 
 

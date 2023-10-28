@@ -136,6 +136,8 @@
 
 <style lang="scss">
 	article {
+		color: var(--fg);
+
 		height: fit-content;
 		display: grid;
 

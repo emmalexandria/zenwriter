@@ -1,5 +1,5 @@
 <script>
-	import "@fontsource/eb-garamond"
+	import "@fontsource/montserrat"
 	import "@fontsource/open-sans"
 
 </script>
@@ -21,7 +21,7 @@
 		margin: 0;
 		padding: 0;
 		height: 100%;
-        background-color: var(--offwhite);
+        background-color: var(--bg0);
 	}
 
 	:global(body::-webkit-scrollbar) {
@@ -29,17 +29,17 @@
 	}
 
 	:global(body::-webkit-scrollbar-track) {
-		background: var(--bg400);
+		background: var(--scrollbar-track);
 	}
 
 	:global(body::-webkit-scrollbar-thumb) {
-		background-color: var(--w500);
-		border: 3px solid var(--bg400);
+		background-color: var(--bg1);
+		border: 3px solid var(--scrollbar-track);
 		border-radius: 6px;
 	}
 
 	:global(::selection) {
-		background-color: var(--bg300)
+		background-color: var(--select-color)
 	}
 
     app-container {

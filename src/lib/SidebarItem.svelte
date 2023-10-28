@@ -16,17 +16,17 @@
         border-radius: 4px;
         margin: unset;
 
-        font-family: "Open Sans";
+        font-family: var(--body-font);
         font-size: 12px;
 
-        background-color: var(--offwhite);
+        background-color: var(--bg0);
         opacity: 0.8;
 
         text-overflow: ellipsis;
 
         &.selected {
             background-color: var(--accentDark);
-            color: var(--w500);
+            color: var(--bg1);
         }
 
         &:hover {

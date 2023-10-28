@@ -18,7 +18,6 @@
     $: updateStyle(selected)
 
     function updateStyle(name: string) {
-        console.log(name);
         $state.currStyle = getStyleFromName(name)
 
         console.log(getStyleFromName(name))
@@ -54,7 +53,8 @@
 		border-radius: 8px;
 
 		border: none;
-		background-color: var(--offwhite);
+		background-color: var(--bg0);
+        color: var(--fg);
 		padding: 1rem;
 	}
 
@@ -66,7 +66,7 @@
 		justify-content: space-between;
 		& h1 {
 			margin: 0;
-			font-family: 'EB Garamond';
+			font-family: var(--header-font);;
 		}
 
 		& button {
@@ -79,7 +79,7 @@
 
 			&:hover {
 				background-color: var(--accentDark);
-				color: var(--w500);
+				color: var(--bg1);
 			}
 		}
 	}

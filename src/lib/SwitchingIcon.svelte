@@ -31,6 +31,8 @@
         background-color: unset;
         border:unset;
 
+        color:inherit;
+
 
         grid-row: 1;
         grid-column: 1;

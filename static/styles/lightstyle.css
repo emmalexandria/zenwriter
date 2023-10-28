@@ -1,13 +1,16 @@
 :root {
-    --w500: #F4F3F2;
-	--bg300: #c2beb9;
-	--bg400: #dbd6d0;
-    --offwhite: #F2EFEC;
-	--bg600: #f4f0e9;
-    --g100: #121212;
-
+	/* Background elevation levels */
+	--bg0: #F2EFEC;
+    --bg1: #F4F3F2;
+	
+	--fg: #121212;
 	--accent: #efb762;
 	--accentDark: #bc6e49;
 
-	--sidebar-header-underline: #DBD8D5;
+	--select-color: #c2beb9;
+	--scrollbar-track: #dbd6d0;
+	--underline: #DBD8D5;
+
+	--header-font: "Montserrat";
+	--body-font: "Open Sans";
 }

@@ -137,9 +137,9 @@
 <style lang="scss">
 	div.editorDiv {
 		padding: 1rem;
-		background-color: var(--w500);
+		background-color: var(--bg1);
 		white-space: pre-wrap;
-		font-family: 'Open Sans';
+		font-family: var(--body-font);
 
 		border-radius: 6px 6px 0px 0px;
 		max-width: 100%;
@@ -155,14 +155,14 @@
 		flex-direction: row;
 
 		padding: 12px;
-		background-color: var(--w500);
+		background-color: var(--bg1);
 
 		border-radius: 0px 0px 6px 6px;
 
 		& p {
 			width: max-content;
 
-			font-family: 'EB Garamond';
+			font-family: var(--header-font);;
 			font-size: 12px;
 
 			margin: 0;
@@ -179,7 +179,7 @@
 		& .focusmsg {
 
 			font-size: 14px;
-			font-family: 'Open Sans';
+			font-family: var(--body-font);
 			font-style: italic;
 			opacity: 0.8;
 		}
@@ -195,49 +195,49 @@
 	}
 
 	div :global(h1) {
-		font-family: 'EB Garamond';
+		font-family: var(--header-font);;
 		font-size: 40px;
 		margin: 0;
 		margin-bottom: 10px;
 	}
 
 	div :global(h2) {
-		font-family: 'EB Garamond';
+		font-family: var(--header-font);;
 		font-size: 36px;
 		margin: 0;
 		margin-bottom: 9px;
 	}
 
 	div :global(h3) {
-		font-family: 'EB Garamond';
+		font-family: var(--header-font);;
 		font-size: 32px;
 		margin: 0;
 		margin-bottom: 8px;
 	}
 
 	div :global(h4) {
-		font-family: 'EB Garamond';
+		font-family: var(--header-font);;
 		font-size: 28px;
 		margin: 0;
 		margin-bottom: 7px;
 	}
 
 	div :global(h5) {
-		font-family: 'EB Garamond';
+		font-family: var(--header-font);;
 		font-size: 24px;
 		margin: 0;
 		margin-bottom: 6px;
 	}
 
 	div :global(h6) {
-		font-family: 'EB Garamond';
+		font-family: var(--header-font);;
 		font-size: 20px;
 		margin: 0;
 		margin-bottom: 5px;
 	}
 
 	div :global(p) {
-		font-family: 'Open Sans';
+		font-family: var(--body-font);
 		font-size: 16px;
 		margin: 0;
 		margin-bottom: 4px;
@@ -255,19 +255,19 @@
 		}
 
 		&::-webkit-scrollbar-track {
-			background: var(--bg400);
+			background: var(--scrollbar-track);
 			border-radius: 0 0 2px 2px;
 		}
 
 		&::-webkit-scrollbar-thumb {
-			background-color: var(--w500);
-			border: 3px solid var(--bg400);
+			background-color: var(--bg1);
+			border: 3px solid var(--scrollbar-track);
 			border-radius: 6px;
 		}
 	}
 
 	div :global(code) {
-		color: #f4f3f2;
+		color: var(--fg);
 		font-family: 'Fira Code';
 		font-size: 16px;
 		max-width: 100%;

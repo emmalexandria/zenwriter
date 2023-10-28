@@ -63,15 +63,15 @@
 			display: block;
 		}
 
-		background-color: var(--w500);
+		background-color: var(--bg1);
 		height: fit-content;
 	}
 
 	p {
-		font-family: 'Open Sans';
+		font-family: var(--body-font);
 		font-size: 16px;
 		text-decoration: underline;
-		text-decoration-color: var(--sidebar-header-underline);
+		text-decoration-color: var(--underline);
 		text-decoration-thickness: 3px;
 		text-underline-offset: 2px;
         font-weight: bold;

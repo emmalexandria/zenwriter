@@ -11,7 +11,7 @@
 
 <style>
     label {
-        font-family: "Open Sans";
+        font-family: var(--body-font);
         font-size: 16px;
     }
 
