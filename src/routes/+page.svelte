@@ -37,8 +37,8 @@
 		return invoke('confirm_unsaved');
 	};
 
-	const openFileEv = () => {
-		openFile($state);
+	const openFileEv = async () => {
+		await openFile($state);
 
 		$sidebar.updateNeeded = true;
 	};
@@ -51,9 +51,9 @@
 		newFile($state);
 	};
 
-	const renameFileEv = () => {
+	const renameFileEv = async () => {
 		if($state.file.fullpath != '') {
-			renameFile($state)
+			await renameFile($state)
 		}
 
 		$sidebar.updateNeeded = true;

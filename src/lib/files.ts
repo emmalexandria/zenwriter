@@ -10,7 +10,7 @@ export interface IFile {
 
 export async function renameFile(state: IEditorState) {
     let fullpath = `${state.file.basedir}/${state.file.filename}.md`
-    
+
     await invoke('rename_file', { oldPath: state.file.fullpath, newPath: fullpath }).then((success: any) => {
         if (success) {
             state.file.fullpath = fullpath;
@@ -69,7 +69,6 @@ export async function saveFile(state: IEditorState) {
 
     state.editorComp.focus();
     state.saved = true;
-    console.log(state.saved)
 }
 
 export async function openFile(state: IEditorState) {
@@ -95,8 +94,6 @@ export async function openFile(state: IEditorState) {
     state.titleComp.setTitle(state.file.filename)
 
     state.saved = true;
-
-    //TODO: Implement sidebar refreshing
 }
 
 export async function openFileWithPath(state: IEditorState, path: string) {

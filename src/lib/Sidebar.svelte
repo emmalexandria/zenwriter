@@ -18,7 +18,9 @@
     }
 
 	async function updateSidebar(file_state: IFile) {
+		console.log("Sidebar update")
 		if(file_state.basedir != undefined) {
+			console.log(file_state.basedir)
 			$sidebar.files = await invoke('get_md_files_from_dir', {dir: file_state.basedir})
 		}	
 
