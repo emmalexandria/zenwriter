@@ -4,8 +4,8 @@
 	import SettingsToggle from './SettingsToggle.svelte';
 	import SettingsDropdown from './SettingsDropdown.svelte';
 
-	import { settings } from '$lib/stores';
-    import {styles} from '$lib/styles'
+	import { settings, state } from '$lib/stores';
+    import {getStyleFromName, styles} from '$lib/styles'
 
 	export let showModal: boolean;
 
@@ -13,9 +13,17 @@
 
 	$: if (dialog && showModal) dialog.showModal();
 
-    function styleChanged(ev: Event) {
-        console.log(ev);
+    let selected: string = $state.currStyle.name;
+
+    $: updateStyle(selected)
+
+    function updateStyle(name: string) {
+        console.log(name);
+        $state.currStyle = getStyleFromName(name)
+
+        console.log(getStyleFromName(name))
     }
+
 </script>
 
 <dialog bind:this={dialog} on:close={() => (showModal = false)}>
@@ -32,9 +40,9 @@
 	</top-bar>
 	<SettingsToggle bind:toggled={$settings.spellcheck}>System spellcheck</SettingsToggle>
 	<SettingsSection title="Theme">
-		<SettingsDropdown items={$styles.map((val) => {
+		<SettingsDropdown bind:selected={selected} items={$styles.map((val) => {
             return val.name;
-        })} on:change={styleChanged}>Theme
+        })}>Theme
         </SettingsDropdown>
 	</SettingsSection>
 </dialog>

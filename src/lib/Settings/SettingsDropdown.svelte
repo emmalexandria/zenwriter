@@ -1,12 +1,19 @@
 <script lang="ts">
     export let items = ["This should have values in it", "There's been a mistake"];
+
+    export let selected: string;
+
+    function onChange(ev: Event) {
+        let selectElement: HTMLSelectElement = ev.target as HTMLSelectElement;
+        selected = selectElement.options[selectElement.selectedIndex].text;
+    }
 </script>
 
 <div>
 <slot/>
-<select>
-    {#each items as item, i }
-        <option value="" selected={i == 0 ? true: false}>{item}</option>
+<select on:change={onChange}>
+    {#each items as item}
+        <option value="" selected={item==selected}>{item}</option>
     {/each} 
 </select>
 </div>

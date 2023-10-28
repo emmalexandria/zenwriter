@@ -84,8 +84,7 @@
 </script>
 
 <svelte:head>
-	<link rel="stylesheet" href="/styles/lightstyle.css">
-
+	<link rel="stylesheet" href={$state.currStyle.path}>
 </svelte:head>
 
 <article class:focused={$state.focused}>
