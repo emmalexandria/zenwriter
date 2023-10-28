@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
     import Icon from "@iconify/svelte"
     import {fade} from 'svelte/transition'
 
-    export let icon1;
+    export let icon1: string;
     export let icon2 = icon1;
     export let switched = false;
     

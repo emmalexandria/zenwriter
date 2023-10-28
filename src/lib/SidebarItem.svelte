@@ -1,11 +1,8 @@
-<script>
-    export let file;
-    export let selected;
+<script lang="ts">
+    export let file: string;
+    export let selected: boolean;
 
     import {nameFromPath} from '$lib/utils'
-
-
-    $: console.log(selected)
 </script>
 
 <button on:click class:selected={selected}>

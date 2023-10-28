@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
 	import TitleBar from '$lib/TitleBar.svelte';
 	import MilkdownEditor from '$lib/MilkdownEditor.svelte';
-	import SettingsModal from '$lib/Settings/SettingsModal.svelte';
+	import SettingsModal from '$lib/settings/SettingsModal.svelte';
 	import Sidebar from '$lib/Sidebar.svelte';
 
 	import { state, sidebar } from '$lib/stores.js';
@@ -9,31 +9,18 @@
 	import { invoke } from '@tauri-apps/api/tauri';
 	import { appWindow } from '@tauri-apps/api/window';
 
-	import { nameFromPath, baseDirFromPath } from '$lib/utils.js';
+	import { nameFromPath } from '$lib/utils.js';
+	import {newFile, openFile, saveFile, renameFile, openFileWithPath} from "$lib/files"
 	import { onMount } from 'svelte';
-	import Icon from '@iconify/svelte';
 	import SwitchingIcon from '../lib/SwitchingIcon.svelte';
 
-	let titleComp;
 
 	let settingsOpen = false;
 	let sidebarOpen = false;
 
-	/* TODO: 
-        [x] - Implement ability to erase content of editor 
-        [x] - Implement renaming
-        [x] - Cover case that what you want to rename file to is already existing
-        [x] - Implement 'file rename' event on TopBar so that user intent is retained 
-    
-    */
 
 	onMount(() => {
-		$state.filename = 'Untitled';
-		$state.saved = true;
-		$state.path = '';
-		$state.content = '';
-
-		$state.editorComp.focus();
+		newFile($state);
 	});
 
 	appWindow.onCloseRequested(async (event) => {
@@ -50,97 +37,30 @@
 		return invoke('confirm_unsaved');
 	};
 
-	const openFileEv = () => {
-		openFile('');
+	const openFileEv = async () => {
+		await openFile($state);
+
+		$sidebar.updateNeeded = true;
 	};
 
-	const openFile = async (path) => {
-		if ($state.saved == false) {
-			if ((await warnUnsaved()) == false) {
-				return;
-			}
+	const saveFileEv = () => {
+		saveFile($state);
+	};
+
+	const newFileEv = () => {
+		newFile($state);
+	};
+
+	const renameFileEv = async () => {
+		if($state.file.fullpath != '') {
+			await renameFile($state)
 		}
 
-		if (path == '') {
-			path = await invoke('open_file_prompt');
-		}
-
-		const content = await invoke('open_file', { path: path });
-
-		if (path == '') return;
-		$state.path = path;
-		$state.filename = nameFromPath(path);
-		$state.contents = content;
-		$state.saved = true;
-
-		$state.editorComp.setContent($state.contents);
-		titleComp.setTitle($state.filename);
-
-		let baseDir = baseDirFromPath($state.path);
-
-		if ($sidebar.currentDir != baseDir) {
-			$sidebar.currentDir = baseDir;
-			$sidebar.files = await invoke('get_md_files_from_dir', { dir: baseDir });
-		}
-
-		$state.editorComp.focus()
+		$sidebar.updateNeeded = true;
 	};
 
-	function saveFile() {
-		if ($state.path === undefined || $state.path === '') {
-			saveAs();
-		} else {
-			saveWithState();
-		}
 
-		$state.editorComp.focus();
-	}
-
-	const saveWithState = async () => {
-		let str = await invoke('save_file', { path: $state.path, contents: $state.contents });
-		if (str == '') return;
-		$state.saved = true;
-	};
-
-	const saveAs = async () => {
-		let path = await invoke('save_file_as', {
-			filename: $state.filename,
-			contents: $state.contents
-		});
-
-		if (path == '') return;
-		$state.path = path;
-		$state.filename = nameFromPath(path);
-		$state.saved = true;
-		titleComp.setTitle($state.filename);
-	};
-
-	const newFile = async () => {
-		if (await invoke('new_file', { saved: $state.saved })) {
-			$state.editorComp.setContent('');
-			$state.path = '';
-			$state.filename = 'Untitled';
-			$state.contents = '';
-			$state.saved = true;
-
-			titleComp.setTitle($state.filename);
-		}
-	};
-
-	const rename = async () => {
-		if ($state.path == '' || $state.path == undefined) return;
-		let newPath = baseDirFromPath($state.path) + `/${$state.filename}.md`;
-
-		await invoke('rename_file', { oldPath: $state.path, newPath: newPath }).then((success) => {
-			if (success) {
-				$state.path = newPath;
-			} else {
-				$state.filename = nameFromPath($state.path);
-			}
-		});
-	};
-
-	function markdownUpdated(ev) {
+	function markdownUpdated(ev: any) {
 		if (ev.detail.new != $state.contents) {
 			$state.saved = false;
 		}
@@ -148,28 +68,19 @@
 		$state.contents = ev.detail.new;
 	}
 
-	function sidebarClick(ev) {
+	function sidebarClick(ev: any) {
 		let file = ev.detail.file;
+
 		if (file == undefined || file == '') {
 			return;
 		}
 
-		if (nameFromPath(file) == nameFromPath($state.path)) {
+		if (nameFromPath(file) == $state.file.filename) {
 			return;
 		}
 
-		openFile(file);
+		openFileWithPath($state, file);
 	}
-
-	function changeFocusMode(mode) {
-		if($state.editorComp != undefined) {
-			$state.editorComp.focus();
-		}
-
-	}
-
-	$: changeFocusMode($state.focused)
-
 </script>
 
 <article class:focused={$state.focused}>
@@ -184,11 +95,11 @@
 	<header>
 		<title-bar>
 			<TitleBar
-				bind:this={titleComp}
+				bind:this={$state.titleComp}
 				on:openEv={openFileEv}
-				on:saveEv={saveFile}
-				on:newEv={newFile}
-				on:renameEv={rename}
+				on:saveEv={saveFileEv}
+				on:newEv={newFileEv}
+				on:renameEv={renameFileEv}
 			/>
 		</title-bar>
 	</header>

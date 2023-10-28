@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import Icon from "@iconify/svelte";
 	import SettingsSection from "./SettingsSection.svelte";
 	import SettingsToggle from "./SettingsToggle.svelte";
@@ -6,13 +6,12 @@
 
     import {settings} from "$lib/stores"
 
-    export let showModal;
+    export let showModal: boolean;
 
-    let dialog;
+    let dialog: HTMLDialogElement;
 
     $: if (dialog && showModal) dialog.showModal();
 
-    $: console.log($settings.spellcheck)
 
 </script>
 

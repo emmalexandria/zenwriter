@@ -12,7 +12,7 @@ import {
 
 import { DOMSerializer } from '@milkdown/prose/model';
 
-export function nameFromPath(path) {
+export function nameFromPath(path: string) {
     let pathStandardised = path.replace(/\\/g, '/');
 
         
@@ -21,7 +21,7 @@ export function nameFromPath(path) {
     return fileName;
 }
 
-export function baseDirFromPath(path) {
+export function baseDirFromPath(path: string) {
     let pathStandardised = path.replace(/\\/g, '/');
 
     return pathStandardised.substr(0, pathStandardised.lastIndexOf('/'));

@@ -1,5 +1,5 @@
-<script>
-    export let toggled;
+<script lang="ts">
+    export let toggled: boolean;
 
 </script>
 

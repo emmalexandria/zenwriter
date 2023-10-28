@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     export let items = ["This should have values in it", "There's been a mistake"];
 </script>
 
@@ -6,7 +6,7 @@
 <slot/>
 <select>
     {#each items as item, i }
-        <option value="" selected={i == 0 ? "selected": ""}>{item}</option>
+        <option value="" selected={i == 0 ? true: false}>{item}</option>
     {/each} 
 </select>
 </div>
