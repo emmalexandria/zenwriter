@@ -24,7 +24,7 @@ export const state = writable<IEditorState>({
     }
 })
 
-
+//Sidebar state has keeps track of the selected file on its own to avoid some wacky async issues
 export interface ISidebarState {
     files: Array<string>,
     updateNeeded: boolean

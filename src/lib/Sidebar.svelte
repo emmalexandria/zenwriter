@@ -15,21 +15,14 @@
         dispatch('fileClicked', {
             file: filePath
         });
-
-		printSidebarState(filePath);
     }
 
-	async function updateSidebar(file_state: IFile) {
+	async function updateSidebar(file_state: IFile, selectedFile = "") {
 		if(file_state.basedir != undefined) {
 			$sidebar.files = await invoke('get_md_files_from_dir', {dir: file_state.basedir})
-		}	
-
+		}
+	
 		$sidebar.updateNeeded = false;
-	}
-
-	function printSidebarState(file: string) {
-		console.log(file)
-		console.log($state.file.fullpath)
 	}
 
 	$: if($sidebar.updateNeeded) updateSidebar($state.file)
@@ -48,7 +41,7 @@
 	<ul>
 		{#each $sidebar.files as file}
 			<li>
-				<SidebarItem {file} on:click={() => fileClicked(file)} selected={(nameFromPath(file) == $state.file.filename)}/>
+				<SidebarItem {file} on:click={() => fileClicked(file)} selected={false}/>
 			</li>
 		{/each}
 	</ul>
