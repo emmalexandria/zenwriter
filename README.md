@@ -13,7 +13,8 @@ Built in [Tauri](https://tauri.app/) and [Sveltekit](https://kit.svelte.dev) usi
 
 ## Screenshots
 
-![App Screenshot](https://raw.githubusercontent.com/emmalexandria/zenwriter_design/main/zenwriter%20screenshot.png?token=GHSAT0AAAAAACIA7G3ZXCKDQKDEBFX2IEDUZJVLFEA)
+![Light mode](https://raw.githubusercontent.com/emmalexandria/zenwriter_design/main/screenshot%20zenwriter%201.png)
+![Dark mode](https://raw.githubusercontent.com/emmalexandria/zenwriter_design/main/screenshot%20zenwriter%202.png)
 
 
 ## Installation
@@ -25,12 +26,6 @@ ZenWriter has no need for an installation directory, but there are installers av
 ### Building from source
 To build from source, you'll require Rust and NodeJS. To build this app, clone the repository and then run `npm run tauri build`. The binaries can be found in /tauri-src/target/release.
 
-    
-## Roadmap
-
-- Movement of nearly all logic into Rust
-- Custom colour schemes (incl syntax)
-- Continuous UI improvement
 
 ## License
 
