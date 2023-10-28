@@ -16,6 +16,6 @@
     }
 
     input:checked {
-        color: var(--aVisited);
+        color: var(--accentDark);
     }
 </style>

@@ -35,7 +35,7 @@
 		{#if $state.file.basedir != ''}
 			{$state.file.basedir}
 		{:else}
-			No dir open
+			No working directory
 		{/if}
 	</p>
 	<ul>
@@ -51,10 +51,7 @@
 	div {
 		display: none;
 		margin-left: 8px;
-
-		max-width: 80%;
-        width: fit-content;
-
+		margin-right: 8px;
 
 		grid-row: 2;
 		border-radius: 4px;
@@ -72,7 +69,11 @@
 
 	p {
 		font-family: 'Open Sans';
-		font-size: 12px;
+		font-size: 16px;
+		text-decoration: underline;
+		text-decoration-color: var(--sidebar-header-underline);
+		text-decoration-thickness: 3px;
+		text-underline-offset: 2px;
         font-weight: bold;
 		margin: 0;
 	}

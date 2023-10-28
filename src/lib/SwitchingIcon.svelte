@@ -45,7 +45,7 @@
         &:hover {
             cursor: pointer;
 
-            color: var(--aVisited)
+            color: var(--accentDark)
         }
     }
 

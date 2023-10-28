@@ -19,13 +19,13 @@
         font-family: "Open Sans";
         font-size: 12px;
 
-        background-color: var(--bg500);
+        background-color: var(--offwhite);
         opacity: 0.8;
 
         text-overflow: ellipsis;
 
         &.selected {
-            background-color: var(--aVisited);
+            background-color: var(--accentDark);
             color: var(--w500);
         }
 

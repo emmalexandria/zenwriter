@@ -145,7 +145,7 @@
 		max-width: 100%;
 
 		overflow-x: wrap;
-		min-height: 50%;
+		min-height: 100%;
 		margin: 0 auto;
 	}
 
@@ -274,10 +274,10 @@
 	}
 
 	div :global(a) {
-		color: var(--a);
+		color: var(--accent);
 
 		&:visited {
-			color: var(--aVisited);
+			color: var(--accentDark);
 		}
 	}
 

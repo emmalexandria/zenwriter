@@ -1,11 +1,13 @@
 :root {
-    --w500: #f2f4f2;
+    --w500: #F4F3F2;
 	--bg300: #c2beb9;
 	--bg400: #dbd6d0;
-    --bg500: #F3EEE7;
+    --offwhite: #F2EFEC;
 	--bg600: #f4f0e9;
     --g100: #121212;
 
-	--a: #efb762;
-	--aVisited: #bc6e49;
+	--accent: #efb762;
+	--accentDark: #bc6e49;
+
+	--sidebar-header-underline: #DBD8D5;
 }

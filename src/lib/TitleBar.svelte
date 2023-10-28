@@ -118,7 +118,7 @@
 		align-self: center;
 		margin-left: 4px;
 		&:hover {
-			color: var(--aVisited);
+			color: var(--accentDark);
 			cursor: pointer;
 		}
 	}
@@ -140,15 +140,15 @@
 		position: relative;
 		font-family: 'EB Garamond';
 		margin: 0;
+		font-weight: 700;
 		padding: 0;
-		font-size: 16pt;
+		font-size: 24pt;
 		color: var(--g100);
 
 		outline: none;
 
 		width: max-content;
 		min-width: 1ch;
-		text-decoration: underline;
 		text-decoration-thickness: 1px;
 		text-underline-offset: 2px;
 		text-decoration-color: var(--g100);

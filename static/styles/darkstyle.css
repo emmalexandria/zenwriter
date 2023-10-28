@@ -2,10 +2,10 @@
     --w500: #00e400;
 	--bg300: #c2beb9;
 	--bg400: #ff8c00;
-    --bg500: #F3EEE7;
+    --offwhite: #F3EEE7;
 	--bg600: #f4f0e9;
     --g100: #a10d0d;
 
-	--a: #efb762;
-	--aVisited: #bc6e49;
+	--accent: #efb762;
+	--accentDark: #bc6e49;
 }

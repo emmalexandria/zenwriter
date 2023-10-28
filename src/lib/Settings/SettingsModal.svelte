@@ -54,7 +54,7 @@
 		border-radius: 8px;
 
 		border: none;
-		background-color: var(--bg500);
+		background-color: var(--offwhite);
 		padding: 1rem;
 	}
 
@@ -78,7 +78,7 @@
 			border-radius: 2px;
 
 			&:hover {
-				background-color: var(--aVisited);
+				background-color: var(--accentDark);
 				color: var(--w500);
 			}
 		}

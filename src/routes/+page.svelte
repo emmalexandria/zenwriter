@@ -81,6 +81,7 @@
 
 		openFileWithPath($state, file);
 	}
+
 </script>
 
 <svelte:head>
@@ -135,7 +136,6 @@
 
 <style lang="scss">
 	article {
-		min-height: 50%;
 		height: fit-content;
 		display: grid;
 
