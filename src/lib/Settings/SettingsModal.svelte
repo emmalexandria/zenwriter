@@ -77,9 +77,12 @@
 			height: fit-content;
 			border-radius: 2px;
 
+            color: var(--fg);
+
 			&:hover {
 				background-color: var(--accentDark);
 				color: var(--bg1);
+                cursor: pointer;
 			}
 		}
 	}
