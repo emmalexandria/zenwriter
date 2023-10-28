@@ -144,6 +144,7 @@
 
 		& body {
 			width: 100%;
+			
 			margin: 0 auto;
 
 			grid-column: 2;

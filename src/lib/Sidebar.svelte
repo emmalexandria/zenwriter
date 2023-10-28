@@ -49,6 +49,7 @@
 
 <style lang="scss">
 	div {
+		padding: 1rem;
 		display: none;
 		margin-left: 8px;
 		margin-right: 8px;
@@ -64,7 +65,6 @@
 
 		background-color: var(--w500);
 		height: fit-content;
-		padding: 8px;
 	}
 
 	p {
