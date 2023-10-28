@@ -8,18 +8,19 @@ export interface IFile {
     fullpath: string,
 }
 
-export async function renameFile(file: IFile) {
-    let fullpath = `${file.fullpath}/${file.filename}.md`
-
-    await invoke('rename_file', { oldPath: file.fullpath, newPath: fullpath }).then((success: any) => {
+export async function renameFile(state: IEditorState) {
+    let fullpath = `${state.file.basedir}/${state.file.filename}.md`
+    
+    await invoke('rename_file', { oldPath: state.file.fullpath, newPath: fullpath }).then((success: any) => {
         if (success) {
-            file.fullpath = fullpath;
+            state.file.fullpath = fullpath;
         }
         else {
             //this is a little dumb but it works
-            file.filename = nameFromPath(file.fullpath)
+            state.file.filename = nameFromPath(state.file.fullpath)
         }
     })
+
 };
 
 
@@ -54,7 +55,7 @@ export async function saveFile(state: IEditorState) {
             basedir: baseDirFromPath(path),
             fullpath: path
         }
-        state.saved = true;
+
         state.titleComp.setTitle(state.file.filename)
     }
     else {
@@ -64,11 +65,11 @@ export async function saveFile(state: IEditorState) {
             console.error(`Saving file ${state.file.fullpath} was unsuccessful!`);
             return
         }
-
-        state.saved = true;
     }
 
     state.editorComp.focus();
+    state.saved = true;
+    console.log(state.saved)
 }
 
 export async function openFile(state: IEditorState) {
@@ -107,7 +108,6 @@ export async function openFileWithPath(state: IEditorState, path: string) {
     }
 
     let newContent: string = await invoke('open_file', { path: path });
-    if (newContent == '') return;
 
     state.file = {
         filename: nameFromPath(path),

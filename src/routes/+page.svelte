@@ -39,6 +39,8 @@
 
 	const openFileEv = () => {
 		openFile($state);
+
+		$sidebar.updateNeeded = true;
 	};
 
 	const saveFileEv = () => {
@@ -50,7 +52,11 @@
 	};
 
 	const renameFileEv = () => {
-		renameFile($state.file)
+		if($state.file.fullpath != '') {
+			renameFile($state)
+		}
+
+		$sidebar.updateNeeded = true;
 	};
 
 
@@ -64,6 +70,7 @@
 
 	function sidebarClick(ev: any) {
 		let file = ev.detail.file;
+
 		if (file == undefined || file == '') {
 			return;
 		}

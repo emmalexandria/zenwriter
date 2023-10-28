@@ -25,12 +25,14 @@ export const state = writable<IEditorState>({
 })
 
 
-interface ISidebarState {
+export interface ISidebarState {
     files: Array<string>,
+    updateNeeded: boolean
 }
 
 export const sidebar = writable<ISidebarState>({
     files: [],
+    updateNeeded: true
 })
 
 interface ISettings {

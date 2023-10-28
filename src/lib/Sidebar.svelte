@@ -1,12 +1,13 @@
 <script lang="ts">
 	export let visible: boolean;
 
-	import { sidebar, state, type IEditorState } from '$lib/stores';
+	import { sidebar, state, type IEditorState, type ISidebarState } from '$lib/stores';
 	import { nameFromPath } from '$lib/utils';
 	import { invoke } from '@tauri-apps/api';
 	import SidebarItem from './SidebarItem.svelte';
 
     import {createEventDispatcher} from 'svelte';
+	import type { IFile } from './files';
 
     const dispatch = createEventDispatcher();
 
@@ -16,12 +17,17 @@
         });
     }
 
-	$: updateSidebar($state)
+	async function updateSidebar(file_state: IFile) {
+		if(file_state.basedir != undefined) {
+			$sidebar.files = await invoke('get_md_files_from_dir', {dir: file_state.basedir})
+		}	
 
-	async function updateSidebar(state: IEditorState) {
-		$sidebar.files = await invoke('get_md_files_from_dir', {dir: state.file.basedir})
+		$sidebar.updateNeeded = false;
 	}
 
+	$: if($sidebar.updateNeeded) updateSidebar($state.file)
+
+	
 </script>
 
 <div class:visible>
@@ -35,7 +41,7 @@
 	<ul>
 		{#each $sidebar.files as file}
 			<li>
-				<SidebarItem {file} selected={nameFromPath(file)==$state.file.filename} on:click={() => fileClicked(file)}/>
+				<SidebarItem {file} on:click={() => fileClicked(file)}/>
 			</li>
 		{/each}
 	</ul>
@@ -66,7 +72,6 @@
 
 	p {
 		font-family: 'Open Sans';
-        text-decoration: underline;
 		font-size: 12px;
         font-weight: bold;
 		margin: 0;
