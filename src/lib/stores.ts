@@ -3,7 +3,7 @@ import { writable, get } from "svelte/store";
 import type { IStyle } from "$lib/styles";
 import type {IFile} from "$lib/files"
 
-import {getStyleFromName, styles} from "$lib/styles"
+import {getStyleFromName, styles, getSystemTheme} from "$lib/styles"
 
 export interface IEditorState {
     contents: string,
@@ -26,8 +26,11 @@ export const state = writable<IEditorState>({
         basedir: "",
         fullpath: ""
     },
-    currStyle: getStyleFromName("Light")
+    //this is super duper dumb
+    currStyle: getStyleFromName(getSystemTheme())
 })
+
+
 
 //Sidebar state has keeps track of the selected file on its own to avoid some wacky async issues
 export interface ISidebarState {

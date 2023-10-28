@@ -20,6 +20,7 @@
         font-size: 12px;
 
         background-color: var(--bg0);
+        color: var(--fg);
         opacity: 0.8;
 
         text-overflow: ellipsis;

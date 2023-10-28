@@ -19,8 +19,12 @@
 
     function updateStyle(name: string) {
         $state.currStyle = getStyleFromName(name)
+    }
 
-        console.log(getStyleFromName(name))
+    $: styleUpdated($state.currStyle.name)
+
+    function styleUpdated(name: string) {
+        selected = name;
     }
 
 </script>

@@ -72,8 +72,8 @@
 		font-size: 16px;
 		text-decoration: underline;
 		text-decoration-color: var(--underline);
-		text-decoration-thickness: 3px;
-		text-underline-offset: 2px;
+		text-decoration-thickness: 2px;
+		text-underline-offset: 1px;
         font-weight: bold;
 		margin: 0;
 	}
