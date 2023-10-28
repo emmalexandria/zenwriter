@@ -1,6 +1,9 @@
 import { SvelteComponent } from "svelte";
-import { writable } from "svelte/store";
+import { writable, get } from "svelte/store";
+import type { IStyle } from "$lib/styles";
 import type {IFile} from "$lib/files"
+
+import {styles} from "$lib/styles"
 
 export interface IEditorState {
     contents: string,
@@ -9,6 +12,7 @@ export interface IEditorState {
     editorComp: any,
     titleComp: any,
     file: IFile
+    currStyle: IStyle
 }
 
 export const state = writable<IEditorState>({
@@ -21,7 +25,8 @@ export const state = writable<IEditorState>({
         filename: "",
         basedir: "",
         fullpath: ""
-    }
+    },
+    currStyle: get(styles)[0]
 })
 
 //Sidebar state has keeps track of the selected file on its own to avoid some wacky async issues

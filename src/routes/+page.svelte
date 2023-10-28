@@ -83,6 +83,11 @@
 	}
 </script>
 
+<svelte:head>
+	<link rel="stylesheet" href="/styles/lightstyle.css">
+
+</svelte:head>
+
 <article class:focused={$state.focused}>
 	<sidebar-icon class="icon">
 		<SwitchingIcon
