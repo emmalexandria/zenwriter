@@ -46,6 +46,19 @@
 		width: 100%;
     }
 
+	:root {
+		--text-0: 12px;
+		--text-1: 16px;
+		--text-2: 20px;
+		--text-3: 24px;
+		--text-4: 28px;
+		--text-5: 32px;
+		--text-6: 36px;
+		--text-7: 40px;
+
+
+	}
+
 	
 
 </style>
