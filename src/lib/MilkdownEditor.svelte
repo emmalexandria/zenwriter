@@ -195,42 +195,42 @@
 	}
 
 	div :global(h1) {
-		font-family: var(--header-font);;
+		font-family: var(--header-font);
 		font-size: 40px;
 		margin: 0;
 		margin-bottom: 10px;
 	}
 
 	div :global(h2) {
-		font-family: var(--header-font);;
+		font-family: var(--header-font);
 		font-size: 36px;
 		margin: 0;
 		margin-bottom: 9px;
 	}
 
 	div :global(h3) {
-		font-family: var(--header-font);;
+		font-family: var(--header-font);
 		font-size: 32px;
 		margin: 0;
 		margin-bottom: 8px;
 	}
 
 	div :global(h4) {
-		font-family: var(--header-font);;
+		font-family: var(--header-font);
 		font-size: 28px;
 		margin: 0;
 		margin-bottom: 7px;
 	}
 
 	div :global(h5) {
-		font-family: var(--header-font);;
+		font-family: var(--header-font);
 		font-size: 24px;
 		margin: 0;
 		margin-bottom: 6px;
 	}
 
 	div :global(h6) {
-		font-family: var(--header-font);;
+		font-family: var(--header-font);
 		font-size: 20px;
 		margin: 0;
 		margin-bottom: 5px;

@@ -2,7 +2,7 @@
 	export let visible: boolean;
 
 	import { sidebar, state, type IEditorState, type ISidebarState } from '$lib/stores';
-	import { nameFromPath } from '$lib/utils';
+	import { baseDirName, nameFromPath } from '$lib/utils';
 	import { invoke } from '@tauri-apps/api';
 	import SidebarItem from './SidebarItem.svelte';
 
@@ -33,7 +33,7 @@
 <div class:visible>
 	<p>
 		{#if $state.file.basedir != ''}
-			{$state.file.basedir}
+			{baseDirName($state.file.basedir)}
 		{:else}
 			No working directory
 		{/if}
@@ -76,6 +76,23 @@
 		text-underline-offset: 1px;
         font-weight: bold;
 		margin: 0;
+
+		overflow-x: auto;
+
+		&::-webkit-scrollbar {
+			height: 12px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: var(--scrollbar-track);
+			border-radius: 0 0 2px 2px;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: var(--bg1);
+			border: 3px solid var(--scrollbar-track);
+			border-radius: 6px;
+		}
 	}
 
     ul {
@@ -87,4 +104,6 @@
         list-style-type: none;
         margin-top: 8px;
     }
+
+	
 </style>
