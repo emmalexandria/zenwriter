@@ -54,9 +54,8 @@
 	const renameFileEv = async () => {
 		if($state.file.fullpath != '') {
 			await renameFile($state)
+			$sidebar.updateNeeded = true;
 		}
-
-		$sidebar.updateNeeded = true;
 	};
 
 
@@ -80,6 +79,8 @@
 		}
 
 		openFileWithPath($state, file);
+
+		$sidebar.updateNeeded = true;
 	}
 
 </script>

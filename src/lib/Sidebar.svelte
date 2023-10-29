@@ -11,7 +11,6 @@
 
     const dispatch = createEventDispatcher();
 
-	let selected;
 
     function fileClicked(filePath: any) {
         dispatch('fileClicked', {
@@ -19,13 +18,16 @@
         });
     }
 
-	async function updateSidebar(file_state: IFile, selectedFile = "") {
+	async function updateSidebar(file_state: IFile) {
 		if(file_state.basedir != undefined) {
 			$sidebar.files = await invoke('get_md_files_from_dir', {dir: file_state.basedir})
+			
 		}
 	
 		$sidebar.updateNeeded = false;
 	}
+
+	$: if($sidebar.updateNeeded) updateSidebar($state.file);
 
 
 	

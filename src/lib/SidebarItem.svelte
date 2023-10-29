@@ -33,7 +33,7 @@
 
         text-overflow: ellipsis;
 
-        transition: background-color 0.2s linear;
+        transition: background-color 0.05s linear;
 
         &.selected {
             background-color: var(--accentDark);
