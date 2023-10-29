@@ -260,7 +260,7 @@
 		}
 
 		&::-webkit-scrollbar-thumb {
-			background-color: var(--bg1);
+			background-color: var(--scrollbar-thumb);
 			border: 3px solid var(--scrollbar-track);
 			border-radius: 6px;
 		}

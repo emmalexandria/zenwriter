@@ -132,10 +132,30 @@
 		font-weight: 700;
 		padding: 0;
 		font-size: 24pt;
+		outline: none;
 		color: var(--fg);
 
 		min-width: 1ch;
 		align-self: flex-start;
+
+		white-space: pre;
+		overflow-x: auto;
+
+		&::-webkit-scrollbar {
+			height: 12px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: var(--scrollbar-track);
+			border-radius: 0 0 2px 2px;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: var(--scrollbar-thumb);
+			border: 3px solid var(--scrollbar-track);
+			border-radius: 6px;
+		}
+		
 	}
 
 	p.renameinfo {

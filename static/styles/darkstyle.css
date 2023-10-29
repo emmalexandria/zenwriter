@@ -1,7 +1,7 @@
 :root {
 	/* Background elevation levels */
 	--bg0: #171719;
-    --bg1: #202126;
+    --bg1: #34353d;
 	
 	--fg: #f4f3f2;
 	--accent: #efb762;
@@ -9,7 +9,8 @@
 
 	--select-color: #c2beb9;
 	--scrollbar-track: #18191d;
-	--underline: #DBD8D5;
+	--scrollbar-thumb: #5d5f6e;
+	--underline: #535563;
 
 	--header-font: "Montserrat";
 	--body-font: "Open Sans";
