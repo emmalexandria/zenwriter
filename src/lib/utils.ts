@@ -29,7 +29,7 @@ export function baseDirFromPath(path: string) {
 
 
 export function baseDirName(basedir: string) {
-    return basedir.substr(basedir.lastIndexOf('/'));
+    return basedir.substr(basedir.lastIndexOf('/')+1);
 }
 
 

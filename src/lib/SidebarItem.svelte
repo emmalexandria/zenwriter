@@ -1,8 +1,16 @@
 <script lang="ts">
     export let file: string;
-    export let selected: boolean;
+
+    let selected: boolean = false;
 
     import {nameFromPath} from '$lib/utils'
+    import {state} from '$lib/stores'
+
+    function isActive(currFilename: string) {
+        selected = (nameFromPath(file) == currFilename);
+    }
+
+    $: isActive($state.file.filename)
 </script>
 
 <button on:click class:selected={selected}>
@@ -24,6 +32,8 @@
         opacity: 0.8;
 
         text-overflow: ellipsis;
+
+        transition: background-color 0.2s linear;
 
         &.selected {
             background-color: var(--accentDark);

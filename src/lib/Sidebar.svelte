@@ -11,6 +11,8 @@
 
     const dispatch = createEventDispatcher();
 
+	let selected;
+
     function fileClicked(filePath: any) {
         dispatch('fileClicked', {
             file: filePath
@@ -25,7 +27,6 @@
 		$sidebar.updateNeeded = false;
 	}
 
-	$: if($sidebar.updateNeeded) updateSidebar($state.file)
 
 	
 </script>
@@ -41,7 +42,7 @@
 	<ul>
 		{#each $sidebar.files as file}
 			<li>
-				<SidebarItem {file} on:click={() => fileClicked(file)} selected={false}/>
+				<SidebarItem {file} on:click={() => fileClicked(file)}/>
 			</li>
 		{/each}
 	</ul>

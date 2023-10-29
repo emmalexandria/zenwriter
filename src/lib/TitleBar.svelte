@@ -134,15 +134,8 @@
 		font-size: 24pt;
 		color: var(--fg);
 
-		outline: none;
-
-		width: max-content;
 		min-width: 1ch;
-		text-decoration-thickness: 1px;
-		text-underline-offset: 2px;
-		text-decoration-color: var(--fg);
-		max-width: 60%;
-		align-self: flex-start center;
+		align-self: flex-start;
 	}
 
 	p.renameinfo {
