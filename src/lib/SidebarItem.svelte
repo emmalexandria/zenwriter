@@ -1,19 +1,12 @@
 <script lang="ts">
     export let file: string;
 
-    let selected: boolean = false;
-
     import {nameFromPath} from '$lib/utils'
     import {state} from '$lib/stores'
 
-    function isActive(currFilename: string) {
-        selected = (nameFromPath(file) == currFilename);
-    }
-
-    $: isActive($state.file.filename)
 </script>
 
-<button on:click class:selected={selected}>
+<button on:click class:selected={$state.file.filename == nameFromPath(file)}>
     <p>{nameFromPath(file)}</p>
 </button>
 <style lang="scss">
