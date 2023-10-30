@@ -41,7 +41,7 @@
     },
     "bundle": {
       "active": true,
-      "category": "DeveloperTool",
+      "category": "Productivity",
       "copyright": "",
       "deb": {
         "depends": []
@@ -81,10 +81,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 720,
         "resizable": true,
-        "title": "zenwriter",
-        "width": 800
+        "title": "ZenWriter",
+        "width": 1280
       }
     ]
   }
