@@ -19,9 +19,9 @@ Built in [Tauri](https://tauri.app/) and [Sveltekit](https://kit.svelte.dev) usi
 
 ## Installation
 
-Binaries for MacOS, Windows, and Linux are available in the releases section.
+Binaries for MacOS, Windows, and Linux are available in the releases section (soon).
 
-ZenWriter has no need for an installation directory, but there are installers available in `.dmg`, `.exe`, and `.msi`. 
+ZenWriter has no need for an installation directory, but there are installers available in `.dmg` and `.exe`.
 
 ### Building from source
 To build from source, you'll require Rust and NodeJS. To build this app, clone the repository and then run `npm run tauri build`. The binaries can be found in /tauri-src/target/release.
