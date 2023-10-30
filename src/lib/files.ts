@@ -1,6 +1,10 @@
 import { invoke } from "@tauri-apps/api"
 
+import {get} from "svelte/store"
+
 import type { IEditorState } from "$lib/stores"
+import {state} from "$lib/stores"
+
 
 export interface IFile {
     filename: string,
@@ -59,16 +63,21 @@ export async function saveFile(state: IEditorState) {
         state.titleComp.setTitle(state.file.filename)
     }
     else {
+        console.log("Saving with existing state")
         let path: string = await invoke('save_file', { path: state.file.fullpath, contents: state.contents });
 
         if (path == '') {
             console.error(`Saving file ${state.file.fullpath} was unsuccessful!`);
-            return
+            return;
         }
+
+
+    
     }
 
-    state.editorComp.focus();
+    
     state.saved = true;
+    state.editorComp.focus();
 }
 
 export async function openFile(state: IEditorState) {

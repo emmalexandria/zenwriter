@@ -58,6 +58,10 @@
 	export const setTitle = (title: string) => {
 		editableTitle = title;
 	};
+
+	$: savedIndicator = $state.saved!=true ? '*' : '';
+
+	$: console.log(savedIndicator, $state.saved)
 </script>
 
 <div class="outer" class:invisible={$state.focused} out:fade={{delay:0, duration: 50}}>
@@ -75,7 +79,7 @@
 			{editableTitle}
 		</p>
 
-		<span class="filesaved">{$state.saved ? '' : '*'}</span>
+		<span class="filesaved">{savedIndicator}</span>
 		<end-items>
 			<button on:click={newEv}>new</button>
 			<button on:click={openEv}>open</button>

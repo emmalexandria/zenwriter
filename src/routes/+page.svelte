@@ -60,11 +60,10 @@
 
 
 	function markdownUpdated(ev: any) {
-		if (ev.detail.new != $state.contents) {
+		$state.contents = ev.detail.new;
+		if (ev.detail.new != ev.detail.old) {
 			$state.saved = false;
 		}
-
-		$state.contents = ev.detail.new;
 	}
 
 	function sidebarClick(ev: any) {
@@ -82,6 +81,8 @@
 
 		$sidebar.updateNeeded = true;
 	}
+
+	$: console.log(`In page: ${$state.saved}`);
 
 </script>
 
