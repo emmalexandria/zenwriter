@@ -60,7 +60,11 @@ export async function saveFile(state: IEditorState) {
             fullpath: path
         }
 
-        state.titleComp.setTitle(state.file.filename)
+        state.titleComp.setTitle(state.file.filename);
+        state.editorComp.setContent(state.contents);
+        state.editorComp.focus()
+        state.saved = true;
+
     }
     else {
         let path: string = await invoke('save_file', { path: state.file.fullpath, contents: state.contents });
@@ -70,12 +74,11 @@ export async function saveFile(state: IEditorState) {
             return;
         }
 
-
+        state.editorComp.setContent(state.contents);
+        ignoreNextMdUpdate.set(true);
+        state.saved = true;
+    } 
     
-    }
-    state.saved = true;
-    ignoreNextMdUpdate.set(true);
-    state.editorComp.focus();
 }
 
 export async function openFile(state: IEditorState) {

@@ -59,7 +59,7 @@
 		editableTitle = title;
 	};
 
-	$: savedIndicator = $state.saved!=true ? '*' : '';
+	$: savedIndicator = $state.saved != true ? '*' : '';
 </script>
 
 <div class="outer" class:invisible={$state.focused} out:fade={{delay:0, duration: 50}}>

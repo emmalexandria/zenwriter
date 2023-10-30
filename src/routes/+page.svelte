@@ -61,7 +61,7 @@
 	$: focusChanged($state.focused)
 
 	function focusChanged(focused: boolean) {
-		if($state.editorComp != undefined) {
+		if($state.editorComp != undefined && $state.editorComp != null) {
 			$state.editorComp.focus();
 		}
 		
