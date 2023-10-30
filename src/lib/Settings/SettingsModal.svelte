@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
-	import SettingsSection from './SettingsSection.svelte';
 	import SettingsToggle from './SettingsToggle.svelte';
 	import SettingsDropdown from './SettingsDropdown.svelte';
 
@@ -40,14 +39,16 @@
 		>
 			<Icon icon="material-symbols:close" style="display:block; color:inherit;" />
 		</button>
+		
 	</top-bar>
+	<hr/>
 	<SettingsToggle bind:toggled={$settings.spellcheck}>System spellcheck</SettingsToggle>
-	<SettingsSection title="Theme">
+	<h2>Theme</h2>
+	<hr>
 		<SettingsDropdown bind:selected={selected} items={$styles.map((val) => {
             return val.name;
         })}>Theme
         </SettingsDropdown>
-	</SettingsSection>
 </dialog>
 
 <style lang="scss">
@@ -59,7 +60,13 @@
 		border: none;
 		background-color: var(--bg0);
         color: var(--fg);
-		padding: 1rem;
+		padding: --var(padding-big);
+	}
+
+	h1,h2,h3,h4,h5 {
+		font-family: var(--header-font);
+		margin: 0;
+		margin-top: 12px;
 	}
 
 	top-bar {
@@ -70,7 +77,8 @@
 		justify-content: space-between;
 		& h1 {
 			margin: 0;
-			font-family: var(--header-font);;
+			font-family: var(--header-font);
+			font-size: var(--text-5);
 		}
 
 		& button {
@@ -89,5 +97,12 @@
                 cursor: pointer;
 			}
 		}
+	}
+
+	hr {
+		border: none;
+        border-top: 1px solid var(--fg);
+        color: var(--fg);
+        opacity: 0.8;
 	}
 </style>

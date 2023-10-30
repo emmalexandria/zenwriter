@@ -55,6 +55,12 @@
 		--text-5: 32px;
 		--text-6: 36px;
 		--text-7: 40px;
+
+		--padding-big: 1rem;
+		--padding-small: 0.5rem;
+
+		--radius-big: 6px;
+		--radius-small: 3px;
 	}
 
 	

@@ -58,6 +58,14 @@
 		}
 	};
 
+	$: focusChanged($state.focused)
+
+	function focusChanged(focused: boolean) {
+		if($state.editorComp != undefined) {
+			$state.editorComp.focus();
+		}
+		
+	}
 
 	function markdownUpdated(ev: any) {
 		$state.contents = ev.detail.new;
@@ -81,9 +89,6 @@
 
 		$sidebar.updateNeeded = true;
 	}
-
-	$: console.log(`In page: ${$state.saved}`);
-
 </script>
 
 <svelte:head>

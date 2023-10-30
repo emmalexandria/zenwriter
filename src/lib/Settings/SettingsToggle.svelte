@@ -15,6 +15,7 @@
         font-size: 16px;
     }
 
+
     input:checked {
         color: var(--accentDark);
     }
