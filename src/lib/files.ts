@@ -60,10 +60,14 @@ export async function saveFile(state: IEditorState) {
             fullpath: path
         }
 
+        state.editorComp.focus();
+
         state.titleComp.setTitle(state.file.filename);
         state.editorComp.setContent(state.contents);
-        state.editorComp.focus()
+        ignoreNextMdUpdate.set(true);
         state.saved = true;
+
+        
 
     }
     else {
