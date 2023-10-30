@@ -27,7 +27,13 @@ ZenWriter has no need for an installation directory, but there are installers av
 To build from source, you'll require Rust and NodeJS. To build this app, clone the repository and then run `npm run tauri build`. The binaries can be found in /tauri-src/target/release.
 
 ## Roadmap
-This repository went public at what I consider to be the V1.0 release. There are still outstanding issues, but for now I'm going to take some time away from this project. I'll do by best to be a good repo owner and merge good contributions, but for a couple months I won't be around to direct major changes.
+This repository went public at what I consider to be the V1.0 release. There are still outstanding  bugs & issues, but for now I need some time away from this project. As of right now, here are the unresolved bugs and features: 
+
+- Bug with saved indicator not working when file is saved with a dialog
+- Lack of file associations (waiting for Tauri docs on that one)
+- Lack of support for keybind based saving
+- Lack of saving of preferences
+- No responsive scaling of text sizes to window sizes (potentially not needed)
 
 ## License
 
