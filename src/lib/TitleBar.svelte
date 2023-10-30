@@ -60,8 +60,6 @@
 	};
 
 	$: savedIndicator = $state.saved!=true ? '*' : '';
-
-	$: console.log(savedIndicator, $state.saved)
 </script>
 
 <div class="outer" class:invisible={$state.focused} out:fade={{delay:0, duration: 50}}>

@@ -4,7 +4,7 @@
 	import SettingsModal from '$lib/settings/SettingsModal.svelte';
 	import Sidebar from '$lib/Sidebar.svelte';
 
-	import { state, sidebar } from '$lib/stores.js';
+	import { state, sidebar, ignoreNextMdUpdate } from '$lib/stores.js';
 
 	import { invoke } from '@tauri-apps/api/tauri';
 	import { appWindow } from '@tauri-apps/api/window';
@@ -68,10 +68,13 @@
 	}
 
 	function markdownUpdated(ev: any) {
-		$state.contents = ev.detail.new;
 		if (ev.detail.new != ev.detail.old) {
-			$state.saved = false;
+			if(!$ignoreNextMdUpdate) {
+				$state.saved = false;
+			}
 		}
+		$ignoreNextMdUpdate = false;
+		$state.contents = ev.detail.new;
 	}
 
 	function sidebarClick(ev: any) {

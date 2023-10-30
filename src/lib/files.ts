@@ -3,7 +3,7 @@ import { invoke } from "@tauri-apps/api"
 import {get} from "svelte/store"
 
 import type { IEditorState } from "$lib/stores"
-import {state} from "$lib/stores"
+import {ignoreNextMdUpdate, state} from "$lib/stores"
 
 
 export interface IFile {
@@ -63,7 +63,6 @@ export async function saveFile(state: IEditorState) {
         state.titleComp.setTitle(state.file.filename)
     }
     else {
-        console.log("Saving with existing state")
         let path: string = await invoke('save_file', { path: state.file.fullpath, contents: state.contents });
 
         if (path == '') {
@@ -74,9 +73,8 @@ export async function saveFile(state: IEditorState) {
 
     
     }
-
-    
     state.saved = true;
+    ignoreNextMdUpdate.set(true);
     state.editorComp.focus();
 }
 
@@ -102,6 +100,7 @@ export async function openFile(state: IEditorState) {
     state.editorComp.setContent(state.contents);
     state.titleComp.setTitle(state.file.filename)
 
+    ignoreNextMdUpdate.set(true);
     state.saved = true;
 }
 
@@ -120,10 +119,13 @@ export async function openFileWithPath(state: IEditorState, path: string) {
         basedir: baseDirFromPath(path),
         fullpath: path
     }
-    state.saved = true;
+    
     state.contents = newContent;
     state.editorComp.setContent(state.contents);
     state.titleComp.setTitle(state.file.filename)
+
+    state.saved = true;
+    ignoreNextMdUpdate.set(true);
 }
 
 

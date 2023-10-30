@@ -26,13 +26,15 @@ export const state = writable<IEditorState>({
         basedir: "",
         fullpath: ""
     },
-    //this is super duper dumb
     currStyle: getStyleFromName(getSystemTheme())
 })
 
+//this is such an incredibly stupid way to handle the issue with the saved state getting overriden when files are opened
+//by the content changing, but itll work
+export const ignoreNextMdUpdate = writable(false);
 
 
-//Sidebar state has keeps track of the selected file on its own to avoid some wacky async issues
+
 export interface ISidebarState {
     files: Array<string>,
     updateNeeded: boolean
